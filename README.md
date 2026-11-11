@@ -26,27 +26,54 @@ ansu/
 | Python | 3.11+ |
 | MySQL | 8.0.16+（或 Docker） |
 
-## 快速启动
+## 快速启动（本机 MySQL 版）
+
+### 1) 配置数据库密码
+
+打开 `ansu/.env`，把 `MYSQL_ROOT_PASSWORD=CHANGE_ME` 改成你的 MySQL root 密码。  
+不要提交 `.env`；它已在 `.gitignore` 里。
+
+### 2) 建库 + 建应用账号（一次即可）
 
 ```bash
-# 1) MySQL
-docker compose up -d mysql
+cd ansu
+python scripts/init-db.py
+```
 
-# 2) 后端（Flyway 自动建 23 表 + 种子）
+这个脚本用 root 建 `ansu` 数据库和 `ansu/ansu` 应用账号；之后应用不再用 root。
+
+### 3) 启动后端（Flyway 自动建 23 表 + 种子）
+
+Maven 没进 PATH 时，用完整路径：
+
+```bash
 cd ansu-server
-mvn spring-boot:run -Dspring-boot.run.profiles=demo
+"D:/DevTools/maven/apache-maven-3.9.16/bin/mvn.cmd" spring-boot:run -Dspring-boot.run.profiles=demo
+```
 
-# 3) AI sidecar
-cd ../ansu-ai
-python -m venv .venv && source .venv/bin/activate
+或先把 `D:/DevTools/maven/apache-maven-3.9.16/bin` 加进 PATH，再 `mvn ...`。
+
+### 4) 启动 AI sidecar（另开终端）
+
+```bash
+cd ansu-ai
+python -m venv .venv
+source .venv/bin/activate        # Windows Git Bash: source .venv/Scripts/activate
 pip install -r requirements.txt
 uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
 
-# 4) 前端
-cd ../ansu-web
+### 5) 启动前端（另开终端）
+
+```bash
+cd ansu-web
 npm install
 npm run dev
 ```
+
+打开 `http://127.0.0.1:5173/login`，选择角色进入。学生默认 314。
+
+> 有 Docker 时也可以用 `docker compose up -d mysql` 起 MySQL；没有 Docker 不影响本机 MySQL 方案。
 
 打开 `http://127.0.0.1:5173/login`，选择角色进入。学生默认 314。
 
