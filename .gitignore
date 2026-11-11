@@ -22,3 +22,20 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# ==========================================
+# 下面是手动补充的 Java IDEA 和 Python 规则
+# ==========================================
+
+# --- IntelliJ IDEA 特有的垃圾文件 ---
+.idea/
+*.iml
+*.iws
+target/
+
+# --- Python 相关的垃圾文件 ---
+__pycache__/
+*.py[cod]
+venv/
+env/
+.env
