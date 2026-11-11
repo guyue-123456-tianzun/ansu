@@ -1,0 +1,75 @@
+server:
+  port: 8080
+  shutdown: graceful
+
+spring:
+  application:
+    name: ansu-server
+  config:
+    import:
+      - optional:file:.env[.properties]
+      - optional:file:../.env[.properties]
+  datasource:
+    url: ${DB_URL:jdbc:mysql://127.0.0.1:3306/ansu?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false}
+    username: ${DB_USER:ansu}
+    password: ${DB_PASSWORD:ansu}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 3000
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    validate-on-migrate: true
+  jackson:
+    time-zone: Asia/Shanghai
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSXXX
+    serialization:
+      write-dates-as-timestamps: false
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 35MB
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    banner: false
+
+ansu:
+  jwt:
+    secret: ${JWT_SECRET:ansu-dev-secret-change-me-at-least-32-bytes}
+    expire-hours: 12
+  ai:
+    base-url: ${AI_BASE_URL:http://127.0.0.1:8000}
+    internal-token: ${INTERNAL_TOKEN:dev-internal-token}
+    connect-timeout-ms: 500
+    read-timeout-ms: 8000
+  demo:
+    enabled: ${DEMO_MODE:true}
+    seed: 20261110
+  rag:
+    enabled: ${RAG_ENABLED:true}
+    llm-mode: ${RAG_LLM_MODE:api}
+    llm-model: ${RAG_LLM_MODEL:glm-4-plus}
+    max-snippets: ${RAG_LLM_MAX_SNIPPETS:6}
+    redact: ${RAG_LLM_REDACT:true}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    root: INFO
+    com.ansu: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%X{requestId:-}] %logger{36} - %msg%n"

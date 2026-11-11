@@ -1,0 +1,92 @@
+# 安宿 · 阈值与规则唯一来源
+# Java 启动时加载、校验、写入 threshold_version；Python 不读本文件。
+# 时间带按 Asia/Shanghai；区间左闭右开。
+
+version: "2026.11.1"
+updated: "2026-11-11"
+
+leakage:
+  baseline_ma: [10, 50]
+  info_ma: 200
+  warn_ma: 300
+  urgent_ma: 500
+  debounce_s: 5
+
+temp:
+  info_c: 60
+  warn_c: 70
+  urgent_c: 90
+  debounce_s: 10
+
+resistive:
+  identify_w: 300
+  pf_min: 0.95
+  step_w: 300
+  duration_s: 3
+  cutoff_w: 500
+  night_cutoff_w: 400
+  night_window: ["23:00", "06:00"]
+  warn_s: 5
+  restore_s: 30
+  lock_after: 3
+  lock_hours: 3
+  pfc_exclude:
+    rise_time_min_s: 1.0
+    pf_at_half_load_max: 0.92
+
+power_policy:
+  non_wash_limit_w: 1500
+  wash_limit_w: 2000
+  night_limit_w: 400
+  wash_window: ["19:00", "23:00"]
+  breaker_rating_w: 2200
+
+whitelist:
+  water_dispenser:
+    rated_w: 2000
+    all_day: true
+    dedicated_circuit: true
+  hair_dryer:
+    rated_w: 1800
+    window: ["19:00", "23:00"]
+    pf_typical: 0.80
+  desktop_pc:
+    rated_w: 1200
+    all_day: true
+    pf_typical: 0.97
+
+appeal:
+  deadline_hours: 24
+  night_deadline: "10:00"
+  max_per_alert: 1
+  third_violation_reason_only: ["misjudge", "device_fault"]
+
+credit:
+  base: 100
+  violation_delta: [-8, -12, -20]
+  learning_delta: 3
+  learning_month_cap: 6
+  no_violation_delta: 2
+  repair_delta: 1
+  repair_month_cap: 2
+  min: 0
+  max: 120
+
+timers:
+  warn_s: 5
+  recover_s: 30
+  lock_h: 3
+  appeal_h: 24
+  alert_auto_resolve_min: 10
+  alert_archive_h: 24
+
+course_map:
+  resistive: "L-RES-01"
+  overload: "L-PWR-01"
+  leakage: "L-SAFE-01"
+  temp: "L-SAFE-01"
+
+demo:
+  seed: 20261110
+  scenarios: ["normal", "violation", "appeal", "night"]
+  dorm_id: 314

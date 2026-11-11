@@ -1,0 +1,10 @@
+ansu:
+  demo:
+    enabled: true
+    seed: 20261110
+
+logging:
+  level:
+    com.ansu: DEBUG
+    org.springframework.security: INFO
+    org.flywaydb: INFO
