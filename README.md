@@ -77,6 +77,29 @@ npm run dev
 
 打开 `http://127.0.0.1:5173/login`，选择角色进入。学生默认 314。
 
+## 在 VSCode 打开
+
+1. VSCode → `File → Open Folder` → 选择 `ansu` 整个文件夹（不要只打开单个文件）。
+2. 推荐扩展：
+   - Extension Pack for Java
+   - Vue - Official
+   - Python
+3. 终端在 VSCode 里打开时，默认目录是 `ansu`；按上面的步骤启动即可。
+
+## Git
+
+本地仓库已初始化（`main` 分支），目前只有本地提交，**还没有远程仓库**。  
+先在 GitHub/Gitee 建一个空仓库（不要勾选 README），然后：
+
+```bash
+cd ansu
+git remote add origin <你的仓库地址>
+git push -u origin main
+```
+
+如果是 HTTPS，第一次 push 会让你登录/填 token；不要在聊天里发密码或 token。  
+也可以在 VSCode 的“源代码管理”里点 `Publish Branch`，按提示登录。
+
 ## 冒烟
 
 ```bash
