@@ -154,8 +154,9 @@ curl -s http://127.0.0.1:8080/api/safety/thresholds \
 | `thresholds.yaml` | 通过 | PyYAML 解析成功；version=2026.11.1，night_limit=400 |
 | Python health | 通过 | `/ai/health` 200；无令牌 401；`/ai/rag/health` 200 |
 | 前端 | 通过 | `npm run build` 成功 |
-| Java | **编译/打包通过** | 用 JDK17 + `-Djava.version=17` 验证；目标 JDK17+，`target/ansu-server-0.1.0.jar` 已生成 |
-| MySQL/Flyway | **未执行** | 本机无 Docker/MySQL；装好后启动先看 Flyway 迁移与阈值版本初始化 |
+| 鉴权 | 通过 | 学生 314 拿 JWT；admin 拿 JWT；无 token 访问阈值 401 |
+| Java | **编译/打包/运行通过** | JDK17；`target/ansu-server-0.1.0.jar`；`/api/health` 返回 ok |
+| MySQL/Flyway | **通过** | Docker MySQL 8.0（3307）；Flyway 应用 2 个迁移；20 寝 + 阈值版本已入库 |
 
 ## 注意
 

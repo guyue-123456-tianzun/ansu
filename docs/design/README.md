@@ -78,8 +78,8 @@
 - Java：`/api/health`、`/api/auth/demo`、`/api/safety/thresholds`、阈值版本初始化
 - Python：`/ai/health`、`/ai/rag/health`
 - Vue：登录页 + 管理/学生占位页
-- 已验证：SQL 静态检查、YAML 解析、Python health 200/401、前端 `npm run build`、Java 编译/打包（JDK17 兼容验证）
-- 未验证：MySQL/Flyway 实际启动（本机无 Docker）
+- 已验证：SQL 静态检查、YAML 解析、Python health 200/401、前端 `npm run build`、Java 编译/打包/启动（JDK17）、Flyway 23 表、学生/admin 演示 JWT、阈值接口
+- 未验证：GitHub push（当前网络 443/22 被拒）；全量业务闭环（下一批）
 
 启动说明见 `../ansu/README.md`。
 
