@@ -150,7 +150,7 @@ curl -s http://127.0.0.1:8080/api/safety/thresholds \
 
 | 项 | 状态 | 说明 |
 |---|---|---|
-| SQL 23 表 | 静态通过 | 表数/重复/外键顺序已检查；未在真实 MySQL 执行 |
+| SQL 23 表 | **通过** | Docker MySQL 8.0 实际执行；Flyway v1/v2 成功 |
 | `thresholds.yaml` | 通过 | PyYAML 解析成功；version=2026.11.1，night_limit=400 |
 | Python health | 通过 | `/ai/health` 200；无令牌 401；`/ai/rag/health` 200 |
 | 前端 | 通过 | `npm run build` 成功 |
