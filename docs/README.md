@@ -5,3 +5,5 @@
 - [design/06-RAG学习模块详细设计.md](design/06-RAG学习模块详细设计.md)：RAG 专项
 - [design/02-补充规格-数据模型与接口契约.md](design/02-补充规格-数据模型与接口契约.md)：核心表/接口契约
 - [design/04-原文对账与修订记录.md](design/04-原文对账与修订记录.md)：原文冲突与裁决
+
+- [ui/README.md](ui/README.md)：前端视觉优化 R0 审计、基线截图与待确认项
