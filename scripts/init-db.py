@@ -29,6 +29,8 @@ def main() -> int:
         return 1
 
     env = load_env(env_path)
+    root_host = env.get("MYSQL_HOST", "127.0.0.1")
+    root_port = env.get("MYSQL_PORT", "3306")
     root_user = env.get("MYSQL_ROOT_USER", "root")
     root_password = env.get("MYSQL_ROOT_PASSWORD", "")
     app_user = env.get("DB_USER", "ansu")
@@ -48,7 +50,7 @@ def main() -> int:
         "FLUSH PRIVILEGES;"
     )
 
-    cmd = ["mysql", "-u", root_user, "-e", sql]
+    cmd = ["mysql", "-h", root_host, "-P", root_port, "-u", root_user, "-e", sql]
     child_env = {**os.environ, "MYSQL_PWD": root_password}
     try:
         subprocess.run(cmd, check=True, env=child_env)

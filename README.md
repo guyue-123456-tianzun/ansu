@@ -26,34 +26,39 @@ ansu/
 | Python | 3.11+ |
 | MySQL | 8.0.16+（或 Docker） |
 
-## 快速启动（本机 MySQL 版）
+## 快速启动（当前默认：Docker MySQL 3307）
 
-### 1) 配置数据库密码
+当前 `.env` 已指向 Docker MySQL `127.0.0.1:3307`，容器 `ansu-mysql-dev` 已启动；本机 3306 的 MySQL 不动。
 
-打开 `ansu/.env`，把 `MYSQL_ROOT_PASSWORD=CHANGE_ME` 改成你的 MySQL root 密码。  
-不要提交 `.env`；它已在 `.gitignore` 里。
+### 1) 确认数据库容器
 
-### 2) 建库 + 建应用账号（一次即可）
+```bash
+docker ps --filter name=ansu-mysql-dev
+```
+
+没有的话：
 
 ```bash
 cd ansu
-python scripts/init-db.py
+docker compose up -d mysql
 ```
 
-这个脚本用 root 建 `ansu` 数据库和 `ansu/ansu` 应用账号；之后应用不再用 root。
-
-### 3) 启动后端（Flyway 自动建 23 表 + 种子）
-
-Maven 没进 PATH 时，用完整路径：
+### 2) 启动后端（Flyway 自动建 23 表 + 种子）
 
 ```bash
 cd ansu-server
-"D:/DevTools/maven/apache-maven-3.9.16/bin/mvn.cmd" spring-boot:run -Dspring-boot.run.profiles=demo
+mvn spring-boot:run -Dspring-boot.run.profiles=demo
 ```
 
-或先把 `D:/DevTools/maven/apache-maven-3.9.16/bin` 加进 PATH，再 `mvn ...`。
+如果 Git Bash 找不到 `mvn`，用 cmd 或完整路径：
 
-### 4) 启动 AI sidecar（另开终端）
+```bash
+"D:/Maven/apache-maven-3.10.0/bin/mvn.cmd" spring-boot:run -Dspring-boot.run.profiles=demo
+```
+
+> 你的全局 Maven `settings.xml` 第 166 行把 `</mirrorOf>` 写成了 `</mirrorof>`，会导致 `mvn` 启动失败；改回大小写即可，或先用 IntelliJ 自带 Maven。
+
+### 3) 启动 AI sidecar（另开终端）
 
 ```bash
 cd ansu-ai
@@ -63,7 +68,7 @@ pip install -r requirements.txt
 uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
-### 5) 启动前端（另开终端）
+### 4) 启动前端（另开终端）
 
 ```bash
 cd ansu-web
@@ -73,9 +78,12 @@ npm run dev
 
 打开 `http://127.0.0.1:5173/login`，选择角色进入。学生默认 314。
 
-> 有 Docker 时也可以用 `docker compose up -d mysql` 起 MySQL；没有 Docker 不影响本机 MySQL 方案。
+### 如果想改用本机 3306 MySQL
 
-打开 `http://127.0.0.1:5173/login`，选择角色进入。学生默认 314。
+1. 打开 `ansu/.env`，把 `DB_URL` 里的 `3307` 改成 `3306`，`MYSQL_PORT` 改成 `3306`。
+2. 填 `MYSQL_ROOT_PASSWORD=你的 root 密码`。
+3. 运行 `python scripts/init-db.py` 建库/建账号。
+4. 重启后端。
 
 ## 在 VSCode 打开
 
@@ -88,8 +96,9 @@ npm run dev
 
 ## Git
 
-本地仓库已初始化（`main` 分支），目前只有本地提交，**还没有远程仓库**。  
-先在 GitHub/Gitee 建一个空仓库（不要勾选 README），然后：
+本地仓库已初始化（`main` 分支），目前只有本地提交。  
+当前环境访问 GitHub 443/22 被拒绝（`Failed to connect to github.com:443`），需要开代理/VPN 后再 push，或改用 Gitee。  
+先建空仓库（不要勾选 README），然后：
 
 ```bash
 cd ansu

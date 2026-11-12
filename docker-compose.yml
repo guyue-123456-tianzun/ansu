@@ -1,6 +1,7 @@
 services:
   mysql:
     image: mysql:8.0
+    restart: unless-stopped
     container_name: ansu-mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -9,7 +10,7 @@ services:
       MYSQL_PASSWORD: ansu
       TZ: Asia/Shanghai
     ports:
-      - "3306:3306"
+      - "3307:3306"
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_0900_ai_ci
