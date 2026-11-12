@@ -1,0 +1,302 @@
+{
+  "generatedAt": "2026-11-12T08:05:40.304Z",
+  "pages": {
+    "375-cut_off": {
+      "viewport": 375,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "horizontalOverflow": false,
+      "layout": {
+        "w": 347,
+        "h": 1047
+      },
+      "topbar": {
+        "w": 347,
+        "h": 142
+      },
+      "chart": {
+        "w": 319,
+        "h": 240
+      },
+      "metrics": [
+        169,
+        169,
+        169,
+        169,
+        347
+      ],
+      "metricScroll": [
+        169,
+        169,
+        169,
+        169,
+        347
+      ],
+      "banner": null
+    },
+    "768-cut_off": {
+      "viewport": 768,
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalOverflow": false,
+      "layout": {
+        "w": 740,
+        "h": 1047
+      },
+      "topbar": {
+        "w": 740,
+        "h": 92
+      },
+      "chart": {
+        "w": 712,
+        "h": 240
+      },
+      "metrics": [
+        365,
+        365,
+        365,
+        365,
+        365
+      ],
+      "metricScroll": [
+        365,
+        365,
+        365,
+        365,
+        365
+      ],
+      "banner": null
+    },
+    "1024-cut_off": {
+      "viewport": 1024,
+      "scrollWidth": 1024,
+      "clientWidth": 1024,
+      "horizontalOverflow": false,
+      "layout": {
+        "w": 984,
+        "h": 1423
+      },
+      "topbar": {
+        "w": 984,
+        "h": 54
+      },
+      "chart": {
+        "w": 712,
+        "h": 300
+      },
+      "metrics": [
+        240,
+        240,
+        240,
+        240,
+        240
+      ],
+      "metricScroll": [
+        240,
+        240,
+        240,
+        240,
+        240
+      ],
+      "banner": null
+    },
+    "1440-cut_off": {
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "horizontalOverflow": false,
+      "layout": {
+        "w": 1400,
+        "h": 908
+      },
+      "topbar": {
+        "w": 1400,
+        "h": 54
+      },
+      "chart": {
+        "w": 784,
+        "h": 721
+      },
+      "metrics": [
+        154,
+        154,
+        154,
+        154,
+        154
+      ],
+      "metricScroll": [
+        154,
+        154,
+        154,
+        154,
+        154
+      ],
+      "banner": null
+    },
+    "1920-cut_off": {
+      "viewport": 1920,
+      "scrollWidth": 1920,
+      "clientWidth": 1920,
+      "horizontalOverflow": false,
+      "layout": {
+        "w": 1880,
+        "h": 988
+      },
+      "topbar": {
+        "w": 1880,
+        "h": 54
+      },
+      "chart": {
+        "w": 1264,
+        "h": 801
+      },
+      "metrics": [
+        250,
+        250,
+        250,
+        250,
+        250
+      ],
+      "metricScroll": [
+        250,
+        250,
+        250,
+        250,
+        250
+      ],
+      "banner": null
+    },
+    "375-error": {
+      "viewport": 375,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "horizontalOverflow": false,
+      "layout": {
+        "w": 347,
+        "h": 799
+      },
+      "topbar": {
+        "w": 347,
+        "h": 142
+      },
+      "chart": {
+        "w": 319,
+        "h": 240
+      },
+      "metrics": [
+        169,
+        169,
+        169,
+        169,
+        347
+      ],
+      "metricScroll": [
+        169,
+        169,
+        169,
+        169,
+        347
+      ],
+      "banner": "数据加载失败：网络异常，请检查后端是否启动重试"
+    },
+    "1440-error": {
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "horizontalOverflow": false,
+      "layout": {
+        "w": 1400,
+        "h": 908
+      },
+      "topbar": {
+        "w": 1400,
+        "h": 54
+      },
+      "chart": {
+        "w": 784,
+        "h": 721
+      },
+      "metrics": [
+        154,
+        154,
+        154,
+        154,
+        154
+      ],
+      "metricScroll": [
+        154,
+        154,
+        154,
+        154,
+        154
+      ],
+      "banner": "数据加载失败：网络异常，请检查后端是否启动重试"
+    },
+    "375-loading": {
+      "viewport": 375,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "horizontalOverflow": false,
+      "layout": {
+        "w": 347,
+        "h": 799
+      },
+      "topbar": {
+        "w": 347,
+        "h": 142
+      },
+      "chart": {
+        "w": 319,
+        "h": 240
+      },
+      "metrics": [
+        169,
+        169,
+        169,
+        169,
+        347
+      ],
+      "metricScroll": [
+        169,
+        169,
+        169,
+        169,
+        347
+      ],
+      "banner": "正在加载安全态势…"
+    },
+    "1440-loading": {
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "horizontalOverflow": false,
+      "layout": {
+        "w": 1400,
+        "h": 908
+      },
+      "topbar": {
+        "w": 1400,
+        "h": 54
+      },
+      "chart": {
+        "w": 784,
+        "h": 721
+      },
+      "metrics": [
+        154,
+        154,
+        154,
+        154,
+        154
+      ],
+      "metricScroll": [
+        154,
+        154,
+        154,
+        154,
+        154
+      ],
+      "banner": "正在加载安全态势…"
+    }
+  }
+}

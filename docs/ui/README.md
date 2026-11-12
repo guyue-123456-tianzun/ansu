@@ -9,3 +9,5 @@
 
 - [ui-changes.md](ui-changes.md)：逐轮变更、验证与已知剩余
 - [screenshots-r1/](screenshots-r1/)：R1 后关键页面截图
+- [r2-metrics.json](r2-metrics.json)：R2 响应式指标
+- [screenshots-r2/](screenshots-r2/)：R2 后管理大屏截图（含 1920、错误/加载）

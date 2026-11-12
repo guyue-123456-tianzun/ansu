@@ -17,6 +17,14 @@
       </div>
     </header>
 
+    <div v-if="error" class="state-banner error" role="alert">
+      <span>数据加载失败：{{ error }}</span>
+      <el-button size="small" @click="refresh">重试</el-button>
+    </div>
+    <div v-else-if="loading && !summary" class="state-banner loading" aria-live="polite">
+      正在加载安全态势…
+    </div>
+
     <main class="layout">
       <aside class="panel dorm-panel">
         <div class="panel-title">寝室状态</div>
@@ -37,19 +45,19 @@
       <section class="center">
         <div class="metrics">
           <div class="metric">
-            <span>正常</span><b>{{ summary?.counts?.normal ?? 0 }}</b>
+            <span>正常</span><b>{{ summary ? summary.counts.normal : '—' }}</b>
           </div>
           <div class="metric warning">
-            <span>提醒</span><b>{{ summary?.counts?.warned ?? 0 }}</b>
+            <span>提醒</span><b>{{ summary ? summary.counts.warned : '—' }}</b>
           </div>
           <div class="metric danger">
-            <span>分闸</span><b>{{ summary?.counts?.cut_off ?? 0 }}</b>
+            <span>分闸</span><b>{{ summary ? summary.counts.cut_off : '—' }}</b>
           </div>
           <div class="metric">
-            <span>闭环率</span><b>{{ Math.round((summary?.closure_rate ?? 0) * 100) }}%</b>
+            <span>闭环率</span><b>{{ summary ? Math.round(summary.closure_rate * 100) + '%' : '—' }}</b>
           </div>
           <div class="metric">
-            <span>总功率</span><b>{{ summary?.total_power_w ?? 0 }}W</b>
+            <span>总功率</span><b>{{ summary ? summary.total_power_w + 'W' : '—' }}</b>
           </div>
         </div>
 
@@ -75,7 +83,7 @@
           <div class="alert-top">
             <el-tag :type="a.level === 'urgent' ? 'danger' : 'warning'" size="small">{{ levelText(a.level) }}</el-tag>
             <strong>{{ a.room_no }}</strong>
-            <span class="muted">{{ a.type }}</span>
+            <span class="muted">{{ typeText(a.type) }}</span>
           </div>
           <div class="alert-meta">
             {{ a.trigger_value }}W · 阈值 {{ a.threshold }}W
@@ -101,6 +109,8 @@ import { useAuthStore } from '../../stores/auth'
 const router = useRouter()
 const auth = useAuthStore()
 const summary = ref<any>(null)
+const loading = ref(true)
+const error = ref('')
 const dorms = ref<any[]>([])
 const loadPoints = ref<any[]>([])
 const alerts = ref<any[]>([])
@@ -136,6 +146,13 @@ function alertStatusText(status?: string) {
   return map[status || ''] || status || ''
 }
 
+function typeText(type?: string) {
+  const map: Record<string, string> = {
+    resistive: '阻性', overload: '总功率', leakage: '漏电', temp: '温度', night_anomaly: '夜间异常',
+  }
+  return map[type || ''] || type || ''
+}
+
 function tagType(status?: string): 'success' | 'warning' | 'danger' | 'info' {
   if (status === 'cut_off') return 'danger'
   if (status === 'warned') return 'warning'
@@ -150,6 +167,7 @@ function shortTime(value?: string) {
 }
 
 async function refresh() {
+  if (!summary.value) loading.value = true
   try {
     const [summaryRes, dormsRes, loadRes, alertsRes]: any[] = await Promise.all([
       http.get('/dashboard/summary'),
@@ -161,11 +179,20 @@ async function refresh() {
     dorms.value = dormsRes.data
     loadPoints.value = loadRes.data
     alerts.value = alertsRes.data
+    error.value = ''
     await nextTick()
     renderChart()
-  } catch (error) {
-    console.error(error)
+  } catch (e: any) {
+    error.value = e?.response?.data?.message || '网络异常，请检查后端是否启动'
+    console.error(e)
+  } finally {
+    loading.value = false
   }
+}
+
+function thresholdValue() {
+  const alert = alerts.value.find((a) => a.dorm_id === selectedDorm.value)
+  return Math.round(alert?.threshold || 500)
 }
 
 function renderChart() {
@@ -173,17 +200,17 @@ function renderChart() {
   if (!chart) chart = echarts.init(chartRef.value)
   const points = loadPoints.value
   chart.setOption({
-    grid: { left: 48, right: 20, top: 20, bottom: 32 },
+    grid: { left: 48, right: 76, top: 20, bottom: 32 },
     tooltip: { trigger: 'axis' },
     xAxis: {
       type: 'category',
       data: points.map((p) => shortTime(p.ts)),
-      axisLabel: { color: 'var(--muted)', fontSize: 11 },
+      axisLabel: { color: '#5b6b80', fontSize: 11, hideOverlap: true },
     },
     yAxis: {
       type: 'value',
       name: 'W',
-      axisLabel: { color: 'var(--muted)' },
+      axisLabel: { color: '#5b6b80' },
       splitLine: { lineStyle: { color: '#eef3f8' } },
     },
     series: [
@@ -197,7 +224,11 @@ function renderChart() {
         markLine: {
           silent: true,
           symbol: 'none',
-          data: [{ yAxis: 500, label: { formatter: '处置线 500W', color: '#b45309' }, lineStyle: { color: '#f59e0b' } }],
+          data: [{
+            yAxis: thresholdValue(),
+            label: { formatter: thresholdValue() + 'W', color: '#b45309', position: 'insideEndTop' },
+            lineStyle: { color: '#f59e0b' },
+          }],
         },
       },
     ],
@@ -273,12 +304,34 @@ function resizeChart() {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
   margin-bottom: 14px;
+}
+.state-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
+.state-banner.error {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border: 1px solid #f5c2c2;
+}
+.state-banner.loading {
+  background: var(--accent-soft);
+  color: var(--ink-2);
 }
 .brand {
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
 }
 .mark {
   width: 38px;
@@ -292,7 +345,8 @@ function resizeChart() {
 }
 .brand strong {
   display: block;
-  font-size: 18px;
+  font-size: var(--text-lg);
+  white-space: nowrap;
 }
 .muted {
   color: var(--muted);
@@ -304,17 +358,18 @@ function resizeChart() {
   display: flex;
   gap: 10px;
   align-items: center;
+  flex-wrap: wrap;
 }
 .layout {
   display: grid;
   grid-template-columns: 250px minmax(0, 1fr) 310px;
   gap: 14px;
-  height: calc(100vh - 92px);
+  height: calc(100dvh - 92px);
 }
 .panel {
   background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(11, 37, 69, 0.06);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-2);
   padding: 14px;
   overflow: hidden;
 }
@@ -370,10 +425,11 @@ function resizeChart() {
   gap: 10px;
 }
 .metric {
-  background: #fff;
-  border-radius: 14px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
   padding: 12px 14px;
-  box-shadow: 0 8px 30px rgba(11, 37, 69, 0.06);
+  box-shadow: var(--shadow-2);
+  min-width: 0;
 }
 .metric span {
   display: block;
@@ -381,7 +437,7 @@ function resizeChart() {
   color: var(--muted);
   margin-bottom: 4px;
 }
-.metric b { font-size: 22px; }
+.metric b { font-size: clamp(18px, 2vw, 24px); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .metric.warning b { color: var(--warning); }
 .metric.danger b { color: var(--danger); }
 .chart-panel {
@@ -403,6 +459,48 @@ function resizeChart() {
 }
 .alert-panel {
   overflow-y: auto;
+}
+@media (max-width: 1199px) {
+  .layout {
+    grid-template-columns: 230px minmax(0, 1fr);
+    height: auto;
+    align-items: start;
+  }
+  .chart-panel {
+    flex: none;
+  }
+  .alert-panel {
+    grid-column: 1 / -1;
+    max-height: 320px;
+  }
+  .metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .chart-panel {
+    min-height: 380px;
+  }
+  .chart {
+    flex: none;
+    height: 300px;
+    min-height: 300px;
+  }
+}
+@media (max-width: 899px) {
+  .page { padding: 14px; }
+  .topbar { align-items: flex-start; }
+  .brand { flex: 1 1 100%; }
+  .brand strong { font-size: var(--text-md); }
+  .layout { grid-template-columns: 1fr; }
+  .dorm-panel { max-height: 280px; }
+  .alert-panel { max-height: none; }
+  .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .chart-panel { min-height: 320px; }
+  .chart { height: 240px; min-height: 240px; }
+}
+@media (max-width: 599px) {
+  .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .metric:last-child { grid-column: span 2; }
+  .actions :deep(.el-button) { min-height: 36px; }
 }
 .alert-item {
   padding: 10px 0;
