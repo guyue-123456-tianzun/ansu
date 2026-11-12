@@ -82,9 +82,12 @@ npm run dev
 在 `ansu` 目录下：
 
 ```powershell
-.un-server.ps1   # 后端 8080
-.un-ai.ps1       # Python 8000
-.un-web.ps1      # 前端 5173
+.
+un-server.ps1   # 后端 8080
+.
+un-ai.ps1       # Python 8000
+.
+un-web.ps1      # 前端 5173
 ```
 
 如果 PowerShell 提示禁止运行脚本，先执行：
@@ -144,27 +147,32 @@ curl -s http://127.0.0.1:8080/api/safety/thresholds \
 - `GET /api/health`：DB + 阈值版本 + demo 状态
 - `GET /api/safety/thresholds`：返回当前阈值（需登录）
 - Python `GET /ai/health`、`GET /ai/rag/health`
-- Vue 登录页 + 管理/学生占位页
+- **S2 第一段**：大屏三区、20 寝状态、60 分钟曲线、告警流
+- `POST /api/demo/switch`、`/inject`、`/reset`；注入 800W → 5 秒模拟分闸
+- `GET /api/dashboard/summary`、`/dorms`、`/load`、`/alerts`、`/alerts/{id}`
+- `GET /api/student/overview`、`/student/alerts/{id}`：学生宿舍卡 + 证据 + 三段式
+- 前端：管理大屏、学生宿舍卡、告警证据页；含“重置演示”按钮
 
 ## 下一批
 
-1. 大屏三区 + 20 寝状态 + 曲线
-2. 演示 run / 注入 800W / 告警 / 证据
-3. 学生告警详情 + 三段式
-4. 申诉/复核/恢复
+1. 已撤除 / 申诉提交 / 宿管复核 / 恢复
+2. 学习任务 / 5 题测验 / 信用回滚
+3. 通知列表与已读
+4. 30 秒自动恢复 / 第 3 次锁定
 5. RAG 上传/解析/分块/检索
 
-## 验证状态（第一批）
+## 当前验证状态
 
 | 项 | 状态 | 说明 |
 |---|---|---|
-| SQL 23 表 | **通过** | Docker MySQL 8.0 实际执行；Flyway v1/v2 成功 |
+| SQL 23 表 | **通过** | 本机 MySQL 8.0 实际执行；Flyway v1/v2 成功 |
 | `thresholds.yaml` | 通过 | PyYAML 解析成功；version=2026.11.1，night_limit=400 |
 | Python health | 通过 | `/ai/health` 200；无令牌 401；`/ai/rag/health` 200 |
 | 前端 | 通过 | `npm run build` 成功 |
 | 鉴权 | 通过 | 学生 314 拿 JWT；admin 拿 JWT；无 token 访问阈值 401 |
 | Java | **编译/打包/运行通过** | JDK17；`mvn spring-boot:run -Dspring-boot.run.profiles=demo` 已验证；`/api/health` 返回 ok |
 | MySQL/Flyway | **通过** | 本机 MySQL 8.0（3306）；Flyway 应用 2 个迁移；20 寝 + 阈值版本已入库 |
+| S2 主链路 | **通过** | 20 寝/曲线正常；注入 800W → 5 秒 cut_off；信用 100→92；学生证据 8 点；重置后恢复 20 正常/100 分 |
 
 ## 注意
 

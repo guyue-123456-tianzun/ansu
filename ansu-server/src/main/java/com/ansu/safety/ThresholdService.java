@@ -53,4 +53,24 @@ public class ThresholdService {
     public String yamlText() {
         return yamlText;
     }
+
+    public int intValue(String key, int fallback) {
+        Object value = config.get(key);
+        if (value == null) return fallback;
+        try {
+            return Integer.parseInt(String.valueOf(value));
+        } catch (NumberFormatException e) {
+            return fallback;
+        }
+    }
+
+    public double doubleValue(String key, double fallback) {
+        Object value = config.get(key);
+        if (value == null) return fallback;
+        try {
+            return Double.parseDouble(String.valueOf(value));
+        } catch (NumberFormatException e) {
+            return fallback;
+        }
+    }
 }
