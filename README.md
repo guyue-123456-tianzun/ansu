@@ -26,37 +26,32 @@ ansu/
 | Python | 3.11+ |
 | MySQL | 8.0.16+（或 Docker） |
 
-## 快速启动（当前默认：Docker MySQL 3307）
+## 快速启动（当前默认：本机 MySQL 3306）
 
-当前 `.env` 已指向 Docker MySQL `127.0.0.1:3307`，容器 `ansu-mysql-dev` 已启动；本机 3306 的 MySQL 不动。
+`.env` 已指向本机 MySQL `127.0.0.1:3306`，并已执行过 `scripts/init-db.py`；`ansu` 库、`ansu` 账号、23 表、20 寝种子都已就绪。
 
-### 1) 确认数据库容器
+### 1) 确认 MySQL 服务
 
-```bash
-docker ps --filter name=ansu-mysql-dev
-```
-
-没有的话：
+Windows 服务里确认 `MySQL80` 正在运行，或：
 
 ```bash
-cd ansu
-docker compose up -d mysql
+"C:/Program Files/MySQL/MySQL Server 8.0/bin/mysql" -h127.0.0.1 -P3306 -uansu -pansu -e "SELECT 1;"
 ```
 
-### 2) 启动后端（Flyway 自动建 23 表 + 种子）
+### 2) 启动后端（Flyway 已执行，不会重复建表）
 
 ```bash
 cd ansu-server
 mvn spring-boot:run -Dspring-boot.run.profiles=demo
 ```
 
-如果 Git Bash 找不到 `mvn`，用 cmd 或完整路径：
+如果 Git Bash 找不到 `mvn`，用 cmd/PowerShell，或用完整路径：
 
 ```bash
 "D:/Maven/apache-maven-3.10.0/bin/mvn.cmd" spring-boot:run -Dspring-boot.run.profiles=demo
 ```
 
-> 你的全局 Maven `settings.xml` 第 166 行把 `</mirrorOf>` 写成了 `</mirrorof>`，会导致 `mvn` 启动失败；改回大小写即可，或先用 IntelliJ 自带 Maven。
+> 你的全局 Maven `settings.xml` 第 166 行把 `</mirrorOf>` 写成了 `</mirrorof>`，会导致 `mvn` 启动失败；改回大写 `O` 即可，或先用 IntelliJ 自带 Maven。
 
 ### 3) 启动 AI sidecar（另开终端）
 
@@ -78,12 +73,9 @@ npm run dev
 
 打开 `http://127.0.0.1:5173/login`，选择角色进入。学生默认 314。
 
-### 如果想改用本机 3306 MySQL
+### 可选：改用 Docker MySQL
 
-1. 打开 `ansu/.env`，把 `DB_URL` 里的 `3307` 改成 `3306`，`MYSQL_PORT` 改成 `3306`。
-2. 填 `MYSQL_ROOT_PASSWORD=你的 root 密码`。
-3. 运行 `python scripts/init-db.py` 建库/建账号。
-4. 重启后端。
+`docker-compose.yml` 已把宿主机端口设为 `3307`，不会和本机 3306 冲突。用 Docker 时把 `.env` 的 `DB_URL` 改成 `3307`、`DB_PASSWORD` 改成 `ansu` 即可。
 
 ## 在 VSCode 打开
 
@@ -96,14 +88,14 @@ npm run dev
 
 ## Git
 
-本地仓库已初始化（`main` 分支），目前只有本地提交。  
-当前环境访问 GitHub 443/22 被拒绝（`Failed to connect to github.com:443`），需要开代理/VPN 后再 push，或改用 Gitee。  
-先建空仓库（不要勾选 README），然后：
+本地仓库已推送到 `https://github.com/guyue-123456-tianzun/ansu`（`main` 分支）。  
+后续提交：
 
 ```bash
 cd ansu
-git remote add origin <你的仓库地址>
-git push -u origin main
+git add .
+git commit -m "feat: ..."
+git push
 ```
 
 如果是 HTTPS，第一次 push 会让你登录/填 token；不要在聊天里发密码或 token。  
@@ -156,7 +148,7 @@ curl -s http://127.0.0.1:8080/api/safety/thresholds \
 | 前端 | 通过 | `npm run build` 成功 |
 | 鉴权 | 通过 | 学生 314 拿 JWT；admin 拿 JWT；无 token 访问阈值 401 |
 | Java | **编译/打包/运行通过** | JDK17；`target/ansu-server-0.1.0.jar`；`/api/health` 返回 ok |
-| MySQL/Flyway | **通过** | Docker MySQL 8.0（3307）；Flyway 应用 2 个迁移；20 寝 + 阈值版本已入库 |
+| MySQL/Flyway | **通过** | 本机 MySQL 8.0（3306）；Flyway 应用 2 个迁移；20 寝 + 阈值版本已入库 |
 
 ## 注意
 
