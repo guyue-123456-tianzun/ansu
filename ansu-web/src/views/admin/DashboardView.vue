@@ -12,6 +12,7 @@
         <el-tag v-if="summary?.run_id" type="info">run {{ summary.run_id }}</el-tag>
         <el-button type="danger" :loading="injecting" @click="inject">注入 800W 阻性</el-button>
         <el-button :loading="resetting" @click="resetDemo">重置演示</el-button>
+        <el-button @click="router.push('/admin/appeals')">申诉工作台</el-button>
         <el-button @click="logout">退出</el-button>
       </div>
     </header>

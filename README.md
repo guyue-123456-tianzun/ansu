@@ -153,12 +153,21 @@ curl -s http://127.0.0.1:8080/api/safety/thresholds \
 - `GET /api/student/overview`、`/student/alerts/{id}`：学生宿舍卡 + 证据 + 三段式
 - 前端：管理大屏、学生宿舍卡、告警证据页；含“重置演示”按钮
 
+## S3 已完成
+
+- `POST /api/student/alerts/{id}/respond`：已撤除；30 秒低功率自动恢复
+- `POST /api/student/appeals`、`GET /api/student/appeals`：申诉提交/进度
+- `GET /api/manager/appeals`、`POST /api/manager/appeals/{id}/review`：宿管通过/驳回
+- `GET /api/student/learning/task`、`POST /api/student/learning/complete`：材料 + 5 题 + 评分 + 恢复
+- 前端：告警详情已撤除/申诉弹窗/安全学习；学习页；申诉工作台
+- 验证：撤除恢复（信用保持）、申诉通过（信用回滚）、学习 100 分（信用 92→95）
+
 ## 下一批
 
-1. 已撤除 / 申诉提交 / 宿管复核 / 恢复
-2. 学习任务 / 5 题测验 / 信用回滚
-3. 通知列表与已读
-4. 30 秒自动恢复 / 第 3 次锁定
+1. 通知列表与已读
+2. 第 3 次锁定 / 管理员解锁
+3. 30 秒恢复的前端倒计时与状态提示
+4. 学习 A/B 卷与月度加分上限
 5. RAG 上传/解析/分块/检索
 
 ## 当前验证状态
@@ -173,6 +182,7 @@ curl -s http://127.0.0.1:8080/api/safety/thresholds \
 | Java | **编译/打包/运行通过** | JDK17；`mvn spring-boot:run -Dspring-boot.run.profiles=demo` 已验证；`/api/health` 返回 ok |
 | MySQL/Flyway | **通过** | 本机 MySQL 8.0（3306）；Flyway 应用 2 个迁移；20 寝 + 阈值版本已入库 |
 | S2 主链路 | **通过** | 20 寝/曲线正常；注入 800W → 5 秒 cut_off；信用 100→92；学生证据 8 点；重置后恢复 20 正常/100 分 |
+| S3 申诉/学习/恢复 | **通过** | 撤除恢复；申诉通过信用回滚到 100；学习 100 分恢复且信用 92→95；重置后干净 |
 
 ## 注意
 

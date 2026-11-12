@@ -6,8 +6,10 @@ const router = createRouter({
     { path: '/', redirect: '/login' },
     { path: '/login', component: () => import('../views/LoginView.vue') },
     { path: '/admin/dashboard', component: () => import('../views/admin/DashboardView.vue') },
+    { path: '/admin/appeals', component: () => import('../views/admin/AppealsView.vue') },
     { path: '/m/home', component: () => import('../views/student/HomeView.vue') },
     { path: '/m/alerts/:id', component: () => import('../views/student/AlertDetailView.vue') },
+    { path: '/m/learning/:id', component: () => import('../views/student/LearningView.vue') },
   ],
 })
 

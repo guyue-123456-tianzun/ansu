@@ -261,6 +261,55 @@ public class QueryService {
         return data;
     }
 
+    public List<Map<String, Object>> rawAlert(long alertId, Long dormId) {
+        return jdbc.queryForList("""
+                SELECT a.id, a.dorm_id, a.demo_run_id, d.status AS dorm_status
+                FROM alert_log a JOIN dorm d ON d.id = a.dorm_id
+                WHERE a.id = ? AND a.dorm_id = ?
+                """, alertId, dormId);
+    }
+
+    public void updateDormNormal(long dormId, LocalDateTime now) {
+        jdbc.update("""
+                UPDATE dorm SET status = 'normal', active_alert_id = NULL, updated_at = ?
+                WHERE id = ?
+                """, now, dormId);
+    }
+
+    public void resolveAlert(long alertId, LocalDateTime now) {
+        jdbc.update("""
+                UPDATE alert_log SET status = 'resolved', resolved_at = COALESCE(resolved_at, ?)
+                WHERE id = ?
+                """, now, alertId);
+    }
+
+    public void logAction(long alertId, String action, LocalDateTime now, String idem) {
+        jdbc.update("""
+                INSERT IGNORE INTO action_log
+                (subject_type, subject_id, action, actor_type, ts, detail_json, request_id, idempotency_key)
+                VALUES ('alert', ?, ?, 'student', ?, '{}', ?, ?)
+                """, alertId, action, now, "student-" + alertId, idem);
+    }
+
+    public void forceLowPower(long dormId, LocalDateTime now, String runId) {
+        jdbc.update("""
+                UPDATE load_record SET p_active_kw = 0.032, pf = 0.98,
+                    leakage_ma = 5, temp_c = 28.0
+                WHERE dorm_id = ? AND ts >= ? AND source = 'mock_event'
+                """, dormId, now.minusSeconds(30));
+        for (int i = 0; i <= 30; i++) {
+            insertLowPower(dormId, now.minusSeconds(30).plusSeconds(i), runId);
+        }
+    }
+
+    public void insertLowPower(long dormId, LocalDateTime ts, String runId) {
+        jdbc.update("""
+                INSERT IGNORE INTO load_record
+                (dorm_id, ts, p_active_kw, pf, leakage_ma, temp_c, source, demo_run_id)
+                VALUES (?, ?, 0.032, 0.98, 5, 28.0, 'mock_event', ?)
+                """, dormId, ts, runId);
+    }
+
     private Map<String, Object> event(LocalDateTime ts, String name) {
         Map<String, Object> event = new LinkedHashMap<>();
         event.put("at", TimeUtil.iso(ts));

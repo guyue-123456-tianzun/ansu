@@ -150,9 +150,17 @@ public class DemoService {
         LocalDateTime now = LocalDateTime.now(TimeUtil.ZONE);
         jdbc.update("UPDATE demo_run SET status = 'archived', ended_at = ? WHERE status = 'active'", now);
         jdbc.update("DELETE FROM notification WHERE ref_type = 'alert'");
+        jdbc.update("""
+                DELETE p FROM appeal p JOIN alert_log a ON a.id = p.alert_id
+                WHERE a.demo_run_id IS NOT NULL
+                """);
+        jdbc.update("""
+                DELETE lr FROM learning_record lr JOIN alert_log a ON a.id = lr.alert_id
+                WHERE a.demo_run_id IS NOT NULL
+                """);
+        jdbc.update("DELETE FROM credit_ledger");
         jdbc.update("DELETE FROM alert_log WHERE demo_run_id IS NOT NULL");
         jdbc.update("DELETE FROM load_record WHERE demo_run_id IS NOT NULL");
-        jdbc.update("DELETE FROM credit_ledger");
 
         String runId = "run_" + UUID.randomUUID().toString().replace("-", "").substring(0, 8);
         jdbc.update("""

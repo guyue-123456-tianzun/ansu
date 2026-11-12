@@ -55,10 +55,29 @@
       </section>
 
       <div class="actions">
-        <el-button disabled>已撤除（下一批）</el-button>
-        <el-button type="primary" disabled>提交申诉（下一批）</el-button>
-        <el-button disabled>安全学习（下一批）</el-button>
+        <el-button :loading="removing" @click="removeDevice">已撤除</el-button>
+        <el-button type="primary" @click="appealVisible = true">提交申诉</el-button>
+        <el-button @click="goLearn">安全学习</el-button>
       </div>
+
+      <el-dialog v-model="appealVisible" title="提交申诉" width="92%">
+        <el-form label-position="top">
+          <el-form-item label="原因">
+            <el-select v-model="appealReason" style="width: 100%">
+              <el-option label="误判" value="misjudge" />
+              <el-option label="设备故障" value="device_fault" />
+              <el-option label="特殊情况" value="special" />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="说明">
+            <el-input v-model="appealText" type="textarea" :rows="4" placeholder="例如：这是台式机电源，不是热得快" />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <el-button @click="appealVisible = false">取消</el-button>
+          <el-button type="primary" :loading="appealing" @click="submitAppeal">提交</el-button>
+        </template>
+      </el-dialog>
     </template>
   </div>
 </template>
@@ -66,12 +85,18 @@
 <script setup lang="ts">
 import { nextTick, onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
 import * as echarts from 'echarts'
 import http from '../../api/http'
 
 const route = useRoute()
 const router = useRouter()
 const detail = ref<any>(null)
+const removing = ref(false)
+const appealing = ref(false)
+const appealVisible = ref(false)
+const appealReason = ref('misjudge')
+const appealText = ref('')
 const chartRef = ref<HTMLDivElement | null>(null)
 let chart: echarts.ECharts | null = null
 
@@ -139,6 +164,45 @@ function renderChart() {
       },
     ],
   })
+}
+
+async function removeDevice() {
+  removing.value = true
+  try {
+    const res: any = await http.post(`/student/alerts/${route.params.id}/respond`, { action: 'removed' })
+    ElMessage.success(res.data?.message || '已撤除')
+    setTimeout(load, 1200)
+  } catch (error: any) {
+    ElMessage.error(error?.response?.data?.message || '操作失败')
+  } finally {
+    removing.value = false
+  }
+}
+
+async function submitAppeal() {
+  if (!appealText.value.trim()) {
+    ElMessage.warning('请填写申诉说明')
+    return
+  }
+  appealing.value = true
+  try {
+    await http.post('/student/appeals', {
+      alertId: Number(route.params.id),
+      reasonType: appealReason.value,
+      statement: appealText.value.trim(),
+    })
+    ElMessage.success('申诉已提交，等待宿管复核')
+    appealVisible.value = false
+    await load()
+  } catch (error: any) {
+    ElMessage.error(error?.response?.data?.message || '提交失败')
+  } finally {
+    appealing.value = false
+  }
+}
+
+function goLearn() {
+  router.push(`/m/learning/${route.params.id}`)
 }
 
 onMounted(load)

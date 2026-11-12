@@ -83,4 +83,36 @@ public class AlertScheduler {
             }
         }
     }
+
+    @Scheduled(fixedDelay = 1000)
+    public void recoverCutOff() {
+        LocalDateTime now = LocalDateTime.now(TimeUtil.ZONE);
+        List<Map<String, Object>> rows = jdbc.queryForList("""
+                SELECT id, active_alert_id FROM dorm
+                WHERE status = 'cut_off' AND active_alert_id IS NOT NULL
+                """);
+        for (Map<String, Object> row : rows) {
+            long dormId = ((Number) row.get("id")).longValue();
+            long alertId = ((Number) row.get("active_alert_id")).longValue();
+            List<Double> powers = jdbc.query("""
+                    SELECT p_active_kw FROM load_record
+                    WHERE dorm_id = ? AND ts >= ?
+                    ORDER BY ts DESC LIMIT 30
+                    """, (rs, rowNum) -> rs.getDouble(1), dormId, now.minusSeconds(30));
+            if (powers.size() < 25 || powers.stream().anyMatch(p -> p >= 0.05)) {
+                continue;
+            }
+            jdbc.update("""
+                    UPDATE dorm SET status = 'normal', active_alert_id = NULL, updated_at = ?
+                    WHERE id = ? AND status = 'cut_off'
+                    """, now, dormId);
+            jdbc.update("UPDATE alert_log SET status = 'resolved', resolved_at = COALESCE(resolved_at, ?) WHERE id = ?",
+                    now, alertId);
+            jdbc.update("""
+                    INSERT IGNORE INTO action_log
+                    (subject_type, subject_id, action, actor_type, ts, detail_json, request_id, idempotency_key)
+                    VALUES ('alert', ?, 'auto_recover', 'system', ?, '{}', ?, ?)
+                    """, alertId, now, "recover-" + alertId, "auto_recover:" + alertId);
+        }
+    }
 }
