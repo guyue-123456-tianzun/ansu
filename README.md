@@ -51,7 +51,7 @@ mvn spring-boot:run -Dspring-boot.run.profiles=demo
 "D:/Maven/apache-maven-3.10.0/bin/mvn.cmd" spring-boot:run -Dspring-boot.run.profiles=demo
 ```
 
-> 你的全局 Maven `settings.xml` 第 166 行把 `</mirrorOf>` 写成了 `</mirrorof>`，会导致 `mvn` 启动失败；改回大写 `O` 即可，或先用 IntelliJ 自带 Maven。
+> Maven 的全局 `settings.xml` 已修复：补上了缺失的 `</mirror>` 闭合标签，阿里云镜像改为 HTTPS。原文件已备份为 `settings.xml.bak-*`。
 
 ### 3) 启动 AI sidecar（另开终端）
 
@@ -147,7 +147,7 @@ curl -s http://127.0.0.1:8080/api/safety/thresholds \
 | Python health | 通过 | `/ai/health` 200；无令牌 401；`/ai/rag/health` 200 |
 | 前端 | 通过 | `npm run build` 成功 |
 | 鉴权 | 通过 | 学生 314 拿 JWT；admin 拿 JWT；无 token 访问阈值 401 |
-| Java | **编译/打包/运行通过** | JDK17；`target/ansu-server-0.1.0.jar`；`/api/health` 返回 ok |
+| Java | **编译/打包/运行通过** | JDK17；`mvn spring-boot:run -Dspring-boot.run.profiles=demo` 已验证；`/api/health` 返回 ok |
 | MySQL/Flyway | **通过** | 本机 MySQL 8.0（3306）；Flyway 应用 2 个迁移；20 寝 + 阈值版本已入库 |
 
 ## 注意
