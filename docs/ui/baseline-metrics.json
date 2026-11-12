@@ -1,10 +1,11 @@
 {
-  "generatedAt": "2026-11-12T07:38:14.008Z",
+  "generatedAt": "2026-11-12T07:53:08.312Z",
   "viewports": [
     "375",
     "768",
     "1024",
-    "1440"
+    "1440",
+    "1920"
   ],
   "pages": {
     "login": {
@@ -462,6 +463,116 @@
             "gap": "normal"
           }
         }
+      },
+      "1920-normal": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "body": {
+          "scrollWidth": 1920,
+          "clientWidth": 1920,
+          "scrollHeight": 1128,
+          "horizontalOverflow": false
+        },
+        "lowContrast": [
+          {
+            "text": "宿舍用电安全共治平台 · 演示身份",
+            "tag": "p",
+            "className": "",
+            "fontSize": 13,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "进入演示",
+            "tag": "span",
+            "className": "",
+            "fontSize": 14,
+            "fontWeight": "500",
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(64, 158, 255)",
+            "contrast": 2.78
+          },
+          {
+            "text": "P0 不建复杂账号：这里只换取演示 JWT。正式版再接学校统一身份认证。",
+            "tag": "p",
+            "className": "hint",
+            "fontSize": 12,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "学生",
+            "tag": "span",
+            "className": "",
+            "fontSize": 14,
+            "fontWeight": "700",
+            "color": "rgb(64, 158, 255)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 2.78
+          }
+        ],
+        "overflow": [],
+        "buttons": [
+          {
+            "text": "进入演示",
+            "w": 420,
+            "h": 32
+          }
+        ],
+        "tinyButtons": [],
+        "samples": {
+          "body": {
+            "selector": "body",
+            "width": 1920,
+            "height": 1080,
+            "fontSize": "16px",
+            "lineHeight": "normal",
+            "color": "rgb(20, 32, 51)",
+            "background": "rgb(242, 245, 249)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          "topbar": null,
+          "panel": null,
+          "card": null,
+          "hero": null,
+          "primary": {
+            "selector": ".el-button--primary",
+            "width": 420,
+            "height": 32,
+            "fontSize": "14px",
+            "lineHeight": "14px",
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(64, 158, 255)",
+            "borderRadius": "4px",
+            "boxShadow": "none",
+            "padding": "8px 15px",
+            "gap": "normal"
+          },
+          "chart": null,
+          "muted": null,
+          "hint": {
+            "selector": ".hint",
+            "width": 420,
+            "height": 19,
+            "fontSize": "12px",
+            "lineHeight": "19.2px",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgba(0, 0, 0, 0)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        }
       }
     },
     "admin-dashboard": {
@@ -488,7 +599,7 @@
             "contrast": 3.35
           },
           {
-            "text": "run run_86b7d480",
+            "text": "run run_42ed7337",
             "tag": "span",
             "className": "el-tag__content",
             "fontSize": 12,
@@ -997,7 +1108,7 @@
             "contrast": 3.35
           },
           {
-            "text": "run run_86b7d480",
+            "text": "run run_42ed7337",
             "tag": "span",
             "className": "el-tag__content",
             "fontSize": 12,
@@ -1542,7 +1653,7 @@
             "contrast": 3.35
           },
           {
-            "text": "run run_86b7d480",
+            "text": "run run_42ed7337",
             "tag": "span",
             "className": "el-tag__content",
             "fontSize": 12,
@@ -2080,7 +2191,7 @@
             "contrast": 3.35
           },
           {
-            "text": "run run_86b7d480",
+            "text": "run run_42ed7337",
             "tag": "span",
             "className": "el-tag__content",
             "fontSize": 12,
@@ -2572,7 +2683,7 @@
           "height": 900
         },
         "body": {
-          "scrollWidth": 673,
+          "scrollWidth": 672,
           "clientWidth": 375,
           "scrollHeight": 1044,
           "horizontalOverflow": true
@@ -2589,7 +2700,7 @@
             "contrast": 3.35
           },
           {
-            "text": "run run_86b7d480",
+            "text": "run run_42ed7337",
             "tag": "span",
             "className": "el-tag__content",
             "fontSize": 12,
@@ -2883,21 +2994,21 @@
           {
             "tag": "div",
             "className": "",
-            "scrollWidth": 673,
+            "scrollWidth": 672,
             "clientWidth": 375,
             "overflowX": "visible"
           },
           {
             "tag": "div",
             "className": "page",
-            "scrollWidth": 673,
+            "scrollWidth": 672,
             "clientWidth": 375,
             "overflowX": "visible"
           },
           {
             "tag": "header",
             "className": "topbar",
-            "scrollWidth": 653,
+            "scrollWidth": 652,
             "clientWidth": 335,
             "overflowX": "visible"
           },
@@ -3155,7 +3266,7 @@
             "contrast": 3.35
           },
           {
-            "text": "run run_86b7d480",
+            "text": "run run_42ed7337",
             "tag": "span",
             "className": "el-tag__content",
             "fontSize": 12,
@@ -3700,7 +3811,7 @@
             "contrast": 3.35
           },
           {
-            "text": "run run_86b7d480",
+            "text": "run run_42ed7337",
             "tag": "span",
             "className": "el-tag__content",
             "fontSize": 12,
@@ -4238,7 +4349,7 @@
             "contrast": 3.35
           },
           {
-            "text": "run run_86b7d480",
+            "text": "run run_42ed7337",
             "tag": "span",
             "className": "el-tag__content",
             "fontSize": 12,
@@ -4699,6 +4810,515 @@
             "selector": ".chart",
             "width": 784,
             "height": 740,
+            "fontSize": "16px",
+            "lineHeight": "normal",
+            "color": "rgb(20, 32, 51)",
+            "background": "rgba(0, 0, 0, 0)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          "muted": {
+            "selector": ".muted",
+            "width": 131,
+            "height": 21,
+            "fontSize": "16px",
+            "lineHeight": "normal",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgba(0, 0, 0, 0)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          "hint": null
+        }
+      },
+      "1920-cut_off": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "body": {
+          "scrollWidth": 1920,
+          "clientWidth": 1920,
+          "scrollHeight": 1122,
+          "horizontalOverflow": false
+        },
+        "lowContrast": [
+          {
+            "text": "1 号楼 · 20 间宿舍",
+            "tag": "span",
+            "className": "muted",
+            "fontSize": 16,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(242, 245, 249)",
+            "contrast": 3.35
+          },
+          {
+            "text": "run run_42ed7337",
+            "tag": "span",
+            "className": "el-tag__content",
+            "fontSize": 12,
+            "fontWeight": "400",
+            "color": "rgb(144, 147, 153)",
+            "background": "rgb(244, 244, 245)",
+            "contrast": 2.8
+          },
+          {
+            "text": "注入 800W 阻性",
+            "tag": "span",
+            "className": "",
+            "fontSize": 14,
+            "fontWeight": "500",
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(245, 108, 108)",
+            "contrast": 2.9
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "分闸",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(234, 246, 253)",
+            "contrast": 3.33
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "state",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "正常",
+            "tag": "span",
+            "className": "",
+            "fontSize": 12,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "提醒",
+            "tag": "span",
+            "className": "",
+            "fontSize": 12,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "分闸",
+            "tag": "span",
+            "className": "",
+            "fontSize": 12,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "闭环率",
+            "tag": "span",
+            "className": "",
+            "fontSize": 12,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "总功率",
+            "tag": "span",
+            "className": "",
+            "fontSize": 12,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "当前功率 812W · 信用分 92",
+            "tag": "div",
+            "className": "muted small",
+            "fontSize": 12,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "分闸",
+            "tag": "span",
+            "className": "el-tag__content",
+            "fontSize": 12,
+            "fontWeight": "400",
+            "color": "rgb(245, 108, 108)",
+            "background": "rgb(254, 240, 240)",
+            "contrast": 2.61
+          }
+        ],
+        "overflow": [],
+        "buttons": [
+          {
+            "text": "注入 800W 阻性",
+            "w": 135,
+            "h": 32
+          },
+          {
+            "text": "重置演示",
+            "w": 88,
+            "h": 32
+          },
+          {
+            "text": "申诉工作台",
+            "w": 102,
+            "h": 32
+          },
+          {
+            "text": "退出",
+            "w": 60,
+            "h": 32
+          },
+          {
+            "text": "10175W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "10249W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "10375W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "10479W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "105105W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "20195W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "20282W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "203106W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "204111W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "20556W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "31182W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "31288W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "313112W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "314812W分闸",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "31590W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "40162W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "402107W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "40352W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "40457W正常",
+            "w": 222,
+            "h": 56
+          },
+          {
+            "text": "40582W正常",
+            "w": 222,
+            "h": 56
+          }
+        ],
+        "tinyButtons": [],
+        "samples": {
+          "body": {
+            "selector": "body",
+            "width": 1920,
+            "height": 1080,
+            "fontSize": "16px",
+            "lineHeight": "normal",
+            "color": "rgb(20, 32, 51)",
+            "background": "rgb(242, 245, 249)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          "topbar": {
+            "selector": ".topbar",
+            "width": 1880,
+            "height": 45,
+            "fontSize": "16px",
+            "lineHeight": "normal",
+            "color": "rgb(20, 32, 51)",
+            "background": "rgba(0, 0, 0, 0)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          "panel": {
+            "selector": ".panel",
+            "width": 250,
+            "height": 988,
+            "fontSize": "16px",
+            "lineHeight": "normal",
+            "color": "rgb(20, 32, 51)",
+            "background": "rgb(255, 255, 255)",
+            "borderRadius": "16px",
+            "boxShadow": "rgba(11, 37, 69, 0.06) 0px 8px 30px 0px",
+            "padding": "14px",
+            "gap": "normal"
+          },
+          "card": null,
+          "hero": null,
+          "primary": null,
+          "chart": {
+            "selector": ".chart",
+            "width": 1264,
+            "height": 820,
             "fontSize": "16px",
             "lineHeight": "normal",
             "color": "rgb(20, 32, 51)",
@@ -5764,6 +6384,124 @@
           }
         }
       },
+      "1920-cut_off": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "body": {
+          "scrollWidth": 1920,
+          "clientWidth": 1920,
+          "scrollHeight": 1128,
+          "horizontalOverflow": false
+        },
+        "lowContrast": [
+          {
+            "text": "退出",
+            "tag": "button",
+            "className": "logout",
+            "fontSize": 12,
+            "fontWeight": "400",
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 1
+          },
+          {
+            "text": "基础分 100；安全学习每次 +3（每月最多 +6）；整月无违规 +2；",
+            "tag": "p",
+            "className": "hint",
+            "fontSize": 13,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "点告警卡片进详情：可“已撤除”“提交申诉”“安全学习”；宿管在申诉工作台",
+            "tag": "p",
+            "className": "hint",
+            "fontSize": 13,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          }
+        ],
+        "overflow": [],
+        "buttons": [
+          {
+            "text": "退出",
+            "w": 48,
+            "h": 30
+          }
+        ],
+        "tinyButtons": [
+          {
+            "text": "退出",
+            "w": 48,
+            "h": 30
+          }
+        ],
+        "samples": {
+          "body": {
+            "selector": "body",
+            "width": 1920,
+            "height": 1080,
+            "fontSize": "16px",
+            "lineHeight": "normal",
+            "color": "rgb(20, 32, 51)",
+            "background": "rgb(242, 245, 249)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          "topbar": null,
+          "panel": null,
+          "card": {
+            "selector": ".card",
+            "width": 433,
+            "height": 153,
+            "fontSize": "16px",
+            "lineHeight": "normal",
+            "color": "rgb(20, 32, 51)",
+            "background": "rgb(255, 255, 255)",
+            "borderRadius": "16px",
+            "boxShadow": "rgba(11, 37, 69, 0.06) 0px 8px 24px 0px",
+            "padding": "16px",
+            "gap": "normal"
+          },
+          "hero": {
+            "selector": ".hero",
+            "width": 529,
+            "height": 175,
+            "fontSize": "16px",
+            "lineHeight": "normal",
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(127, 29, 29)",
+            "borderRadius": "20px",
+            "boxShadow": "rgba(11, 37, 69, 0.2) 0px 16px 40px 0px",
+            "padding": "20px",
+            "gap": "normal"
+          },
+          "primary": null,
+          "chart": null,
+          "muted": null,
+          "hint": {
+            "selector": ".hint",
+            "width": 401,
+            "height": 42,
+            "fontSize": "13px",
+            "lineHeight": "20.8px",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgba(0, 0, 0, 0)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          }
+        }
+      },
       "375-error": {
         "viewport": {
           "width": 375,
@@ -6085,7 +6823,7 @@
             "contrast": 2.77
           },
           {
-            "text": "15:38:25",
+            "text": "15:53:22",
             "tag": "span",
             "className": "time",
             "fontSize": 12,
@@ -6095,7 +6833,7 @@
             "contrast": 3.66
           },
           {
-            "text": "15:38:25",
+            "text": "15:53:22",
             "tag": "span",
             "className": "time",
             "fontSize": 12,
@@ -6105,7 +6843,7 @@
             "contrast": 3.66
           },
           {
-            "text": "15:38:31",
+            "text": "15:53:27",
             "tag": "span",
             "className": "time",
             "fontSize": 12,
@@ -6284,7 +7022,7 @@
             "contrast": 2.77
           },
           {
-            "text": "15:38:25",
+            "text": "15:53:22",
             "tag": "span",
             "className": "time",
             "fontSize": 12,
@@ -6294,7 +7032,7 @@
             "contrast": 3.66
           },
           {
-            "text": "15:38:25",
+            "text": "15:53:22",
             "tag": "span",
             "className": "time",
             "fontSize": 12,
@@ -6304,7 +7042,7 @@
             "contrast": 3.66
           },
           {
-            "text": "15:38:31",
+            "text": "15:53:27",
             "tag": "span",
             "className": "time",
             "fontSize": 12,
@@ -6483,7 +7221,7 @@
             "contrast": 2.77
           },
           {
-            "text": "15:38:25",
+            "text": "15:53:22",
             "tag": "span",
             "className": "time",
             "fontSize": 12,
@@ -6493,7 +7231,7 @@
             "contrast": 3.66
           },
           {
-            "text": "15:38:25",
+            "text": "15:53:22",
             "tag": "span",
             "className": "time",
             "fontSize": 12,
@@ -6503,7 +7241,7 @@
             "contrast": 3.66
           },
           {
-            "text": "15:38:31",
+            "text": "15:53:27",
             "tag": "span",
             "className": "time",
             "fontSize": 12,
@@ -6682,7 +7420,7 @@
             "contrast": 2.77
           },
           {
-            "text": "15:38:25",
+            "text": "15:53:22",
             "tag": "span",
             "className": "time",
             "fontSize": 12,
@@ -6692,7 +7430,7 @@
             "contrast": 3.66
           },
           {
-            "text": "15:38:25",
+            "text": "15:53:22",
             "tag": "span",
             "className": "time",
             "fontSize": 12,
@@ -6702,7 +7440,7 @@
             "contrast": 3.66
           },
           {
-            "text": "15:38:31",
+            "text": "15:53:27",
             "tag": "span",
             "className": "time",
             "fontSize": 12,
@@ -6751,6 +7489,205 @@
             "selector": "body",
             "width": 1440,
             "height": 1000,
+            "fontSize": "16px",
+            "lineHeight": "normal",
+            "color": "rgb(20, 32, 51)",
+            "background": "rgb(242, 245, 249)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          "topbar": {
+            "selector": ".topbar",
+            "width": 430,
+            "height": 37,
+            "fontSize": "16px",
+            "lineHeight": "normal",
+            "color": "rgb(20, 32, 51)",
+            "background": "rgba(0, 0, 0, 0)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "10px"
+          },
+          "panel": null,
+          "card": {
+            "selector": ".card",
+            "width": 430,
+            "height": 276,
+            "fontSize": "16px",
+            "lineHeight": "normal",
+            "color": "rgb(20, 32, 51)",
+            "background": "rgb(255, 255, 255)",
+            "borderRadius": "16px",
+            "boxShadow": "rgba(11, 37, 69, 0.06) 0px 8px 24px 0px",
+            "padding": "16px",
+            "gap": "normal"
+          },
+          "hero": null,
+          "primary": {
+            "selector": ".el-button--primary",
+            "width": 88,
+            "height": 32,
+            "fontSize": "14px",
+            "lineHeight": "14px",
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(64, 158, 255)",
+            "borderRadius": "4px",
+            "boxShadow": "none",
+            "padding": "8px 15px",
+            "gap": "normal"
+          },
+          "chart": {
+            "selector": ".chart",
+            "width": 398,
+            "height": 190,
+            "fontSize": "16px",
+            "lineHeight": "normal",
+            "color": "rgb(20, 32, 51)",
+            "background": "rgba(0, 0, 0, 0)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          "muted": null,
+          "hint": null
+        }
+      },
+      "1920-cut_off": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "body": {
+          "scrollWidth": 1920,
+          "clientWidth": 1920,
+          "scrollHeight": 1128,
+          "horizontalOverflow": false
+        },
+        "lowContrast": [
+          {
+            "text": "提醒",
+            "tag": "span",
+            "className": "tag",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 1
+          },
+          {
+            "text": "PF 0.998 · 阶跃 780W · 持续 5.0s · 规则 re",
+            "tag": "div",
+            "className": "evidence-line",
+            "fontSize": 11,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "发生了什么",
+            "tag": "span",
+            "className": "label",
+            "fontSize": 11,
+            "fontWeight": "700",
+            "color": "rgb(14, 165, 233)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 2.77
+          },
+          {
+            "text": "为什么判定",
+            "tag": "span",
+            "className": "label",
+            "fontSize": 11,
+            "fontWeight": "700",
+            "color": "rgb(14, 165, 233)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 2.77
+          },
+          {
+            "text": "现在可以做什么",
+            "tag": "span",
+            "className": "label",
+            "fontSize": 11,
+            "fontWeight": "700",
+            "color": "rgb(14, 165, 233)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 2.77
+          },
+          {
+            "text": "15:53:22",
+            "tag": "span",
+            "className": "time",
+            "fontSize": 12,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "15:53:22",
+            "tag": "span",
+            "className": "time",
+            "fontSize": 12,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "15:53:27",
+            "tag": "span",
+            "className": "time",
+            "fontSize": 12,
+            "fontWeight": "400",
+            "color": "rgb(120, 135, 155)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 3.66
+          },
+          {
+            "text": "提交申诉",
+            "tag": "span",
+            "className": "",
+            "fontSize": 14,
+            "fontWeight": "500",
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(64, 158, 255)",
+            "contrast": 2.78
+          }
+        ],
+        "overflow": [],
+        "buttons": [
+          {
+            "text": "← 返回",
+            "w": 73,
+            "h": 37
+          },
+          {
+            "text": "已撤除",
+            "w": 74,
+            "h": 32
+          },
+          {
+            "text": "提交申诉",
+            "w": 88,
+            "h": 32
+          },
+          {
+            "text": "安全学习",
+            "w": 88,
+            "h": 32
+          }
+        ],
+        "tinyButtons": [],
+        "samples": {
+          "body": {
+            "selector": "body",
+            "width": 1920,
+            "height": 1080,
             "fontSize": "16px",
             "lineHeight": "normal",
             "color": "rgb(20, 32, 51)",
@@ -7375,6 +8312,145 @@
           "muted": null,
           "hint": null
         }
+      },
+      "1920-task": {
+        "viewport": {
+          "width": 1920,
+          "height": 1080
+        },
+        "body": {
+          "scrollWidth": 1920,
+          "clientWidth": 1920,
+          "scrollHeight": 1660,
+          "horizontalOverflow": false
+        },
+        "lowContrast": [
+          {
+            "text": "规定怎么说",
+            "tag": "h3",
+            "className": "",
+            "fontSize": 13,
+            "fontWeight": "700",
+            "color": "rgb(14, 165, 233)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 2.77
+          },
+          {
+            "text": "为什么",
+            "tag": "h3",
+            "className": "",
+            "fontSize": 13,
+            "fontWeight": "700",
+            "color": "rgb(14, 165, 233)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 2.77
+          },
+          {
+            "text": "现在怎么做",
+            "tag": "h3",
+            "className": "",
+            "fontSize": 13,
+            "fontWeight": "700",
+            "color": "rgb(14, 165, 233)",
+            "background": "rgb(255, 255, 255)",
+            "contrast": 2.77
+          },
+          {
+            "text": "提交测验",
+            "tag": "span",
+            "className": "",
+            "fontSize": 14,
+            "fontWeight": "500",
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(64, 158, 255)",
+            "contrast": 2.78
+          }
+        ],
+        "overflow": [],
+        "buttons": [
+          {
+            "text": "← 返回",
+            "w": 73,
+            "h": 37
+          },
+          {
+            "text": "提交测验",
+            "w": 430,
+            "h": 32
+          }
+        ],
+        "tinyButtons": [],
+        "samples": {
+          "body": {
+            "selector": "body",
+            "width": 1920,
+            "height": 1080,
+            "fontSize": "16px",
+            "lineHeight": "normal",
+            "color": "rgb(20, 32, 51)",
+            "background": "rgb(242, 245, 249)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "normal"
+          },
+          "topbar": {
+            "selector": ".topbar",
+            "width": 430,
+            "height": 37,
+            "fontSize": "16px",
+            "lineHeight": "normal",
+            "color": "rgb(20, 32, 51)",
+            "background": "rgba(0, 0, 0, 0)",
+            "borderRadius": "0px",
+            "boxShadow": "none",
+            "padding": "0px",
+            "gap": "10px"
+          },
+          "panel": null,
+          "card": {
+            "selector": ".card",
+            "width": 430,
+            "height": 307,
+            "fontSize": "16px",
+            "lineHeight": "normal",
+            "color": "rgb(20, 32, 51)",
+            "background": "rgb(255, 255, 255)",
+            "borderRadius": "16px",
+            "boxShadow": "rgba(11, 37, 69, 0.06) 0px 8px 24px 0px",
+            "padding": "16px",
+            "gap": "normal"
+          },
+          "hero": {
+            "selector": ".hero",
+            "width": 430,
+            "height": 119,
+            "fontSize": "16px",
+            "lineHeight": "normal",
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(11, 37, 69)",
+            "borderRadius": "18px",
+            "boxShadow": "none",
+            "padding": "20px",
+            "gap": "normal"
+          },
+          "primary": {
+            "selector": ".el-button--primary",
+            "width": 430,
+            "height": 32,
+            "fontSize": "14px",
+            "lineHeight": "14px",
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(64, 158, 255)",
+            "borderRadius": "4px",
+            "boxShadow": "none",
+            "padding": "8px 15px",
+            "gap": "normal"
+          },
+          "chart": null,
+          "muted": null,
+          "hint": null
+        }
       }
     },
     "appeals": {
@@ -7401,7 +8477,7 @@
             "contrast": 2.04
           },
           {
-            "text": "misjudge · 314 宿舍 · 2026/11/13 15:39",
+            "text": "misjudge · 314 宿舍 · 2026/11/13 15:54",
             "tag": "div",
             "className": "meta",
             "fontSize": 12,
@@ -7542,7 +8618,7 @@
             "contrast": 2.04
           },
           {
-            "text": "misjudge · 314 宿舍 · 2026/11/13 15:39",
+            "text": "misjudge · 314 宿舍 · 2026/11/13 15:54",
             "tag": "div",
             "className": "meta",
             "fontSize": 12,
@@ -7683,7 +8759,7 @@
             "contrast": 2.04
           },
           {
-            "text": "misjudge · 314 宿舍 · 2026/11/13 15:39",
+            "text": "misjudge · 314 宿舍 · 2026/11/13 15:54",
             "tag": "div",
             "className": "meta",
             "fontSize": 12,

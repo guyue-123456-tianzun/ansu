@@ -70,7 +70,7 @@ credit:
   repair_delta: 1
   repair_month_cap: 2
   min: 0
-  max: 120
+  max: 100
 
 timers:
   warn_s: 5

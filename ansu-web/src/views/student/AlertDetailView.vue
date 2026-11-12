@@ -139,12 +139,12 @@ function renderChart() {
     xAxis: {
       type: 'category',
       data: points.map((p: any) => shortTime(p.ts)),
-      axisLabel: { color: '#78879b', fontSize: 10 },
+      axisLabel: { color: 'var(--muted)', fontSize: 10 },
     },
     yAxis: {
       type: 'value',
       name: 'W',
-      axisLabel: { color: '#78879b' },
+      axisLabel: { color: 'var(--muted)' },
       splitLine: { lineStyle: { color: '#eef3f8' } },
     },
     series: [
@@ -211,10 +211,18 @@ onUnmounted(() => chart?.dispose())
 
 <style scoped>
 .page {
-  max-width: 430px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: none;
+  margin: 0;
   min-height: 100%;
-  padding: 16px 14px 32px;
+  padding: 16px;
+}
+.explain p,
+.card p {
+  max-width: 68ch;
+}
+@media (min-width: 900px) {
+  .page { padding: 24px 32px; }
 }
 .topbar {
   display: flex;
@@ -227,16 +235,16 @@ onUnmounted(() => chart?.dispose())
   background: #fff;
   border-radius: 10px;
   padding: 8px 10px;
-  color: #0b2545;
+  color: var(--navy);
 }
 .spacer { flex: 1; }
 .loading {
   padding: 40px 0;
   text-align: center;
-  color: #78879b;
+  color: var(--muted);
 }
 .status-card {
-  background: #0b2545;
+  background: var(--navy);
   color: #fff;
   border-radius: 18px;
   padding: 18px;
@@ -289,7 +297,7 @@ onUnmounted(() => chart?.dispose())
 .evidence-line {
   margin-top: 8px;
   font-size: 11px;
-  color: #78879b;
+  color: var(--muted);
   line-height: 1.5;
 }
 .explain {
@@ -299,14 +307,14 @@ onUnmounted(() => chart?.dispose())
 }
 .label {
   font-size: 11px;
-  color: #0ea5e9;
+  color: var(--accent-2);
   font-weight: 700;
 }
 .explain p {
   margin: 4px 0 0;
   font-size: 13px;
   line-height: 1.7;
-  color: #43536a;
+  color: var(--ink-2);
 }
 .timeline-row {
   display: flex;
@@ -314,17 +322,17 @@ onUnmounted(() => chart?.dispose())
   gap: 8px;
   padding: 6px 0;
   font-size: 13px;
-  color: #43536a;
+  color: var(--ink-2);
 }
 .timeline-row .dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #0ea5e9;
+  background: var(--accent-2);
 }
 .timeline-row .time {
   width: 58px;
-  color: #78879b;
+  color: var(--muted);
   font-size: 12px;
 }
 .actions {

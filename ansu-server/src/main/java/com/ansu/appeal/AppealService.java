@@ -177,7 +177,7 @@ public class AppealService {
 
         if ("approved".equals(decision)) {
             queryService.forceLowPower(dormId, now, runId);
-            int after = Math.max(0, Math.min(120, credit + originalPenalty));
+            int after = Math.max(0, Math.min(100, credit + originalPenalty));
             jdbc.update("""
                     UPDATE dorm SET status = 'normal', active_alert_id = NULL,
                         credit_score = ?, updated_at = ?

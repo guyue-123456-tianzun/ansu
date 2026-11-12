@@ -45,7 +45,7 @@ public class AlertScheduler {
             Integer before = jdbc.queryForObject(
                     "SELECT credit_score FROM dorm WHERE id = ?", Integer.class, dormId);
             int creditBefore = before == null ? 100 : before;
-            int creditAfter = Math.max(0, Math.min(120, creditBefore - 8));
+            int creditAfter = Math.max(0, Math.min(100, creditBefore - 8));
 
             jdbc.update("""
                     UPDATE dorm

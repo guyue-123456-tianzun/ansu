@@ -31,7 +31,7 @@
       </el-form>
 
       <p class="hint">
-        P0 不建复杂账号：这里只换取演示 JWT。正式版再接学校统一身份认证。
+        演示环境：选择角色进入；仅使用演示数据，正式版将接入学校统一身份认证。
       </p>
     </div>
   </div>
@@ -74,7 +74,7 @@ async function submit() {
   display: grid;
   place-items: center;
   padding: 24px;
-  background: radial-gradient(circle at 20% 10%, #eaf6fd, #f2f5f9 55%);
+  background: radial-gradient(circle at 20% 10%, var(--accent-soft), var(--bg) 55%);
 }
 .login-card {
   width: min(420px, 100%);
@@ -95,7 +95,7 @@ async function submit() {
   border-radius: 14px;
   display: grid;
   place-items: center;
-  background: #0b2545;
+  background: var(--navy);
   color: #fff;
   font-size: 22px;
   font-weight: 700;
@@ -106,12 +106,12 @@ h1 {
 }
 .brand p {
   margin: 4px 0 0;
-  color: #78879b;
+  color: var(--muted);
   font-size: 13px;
 }
 .hint {
   margin: 18px 0 0;
-  color: #78879b;
+  color: var(--muted);
   font-size: 12px;
   line-height: 1.6;
 }

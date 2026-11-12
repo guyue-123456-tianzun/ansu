@@ -92,10 +92,14 @@ onMounted(load)
 
 <style scoped>
 .page {
-  max-width: 900px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: none;
+  margin: 0;
   min-height: 100%;
   padding: 20px 18px 40px;
+}
+@media (min-width: 900px) {
+  .page { padding: 24px 32px 40px; }
 }
 .topbar {
   display: flex;
@@ -108,14 +112,14 @@ onMounted(load)
   background: #fff;
   border-radius: 10px;
   padding: 8px 12px;
-  color: #0b2545;
+  color: var(--navy);
   cursor: pointer;
 }
 .spacer { flex: 1; }
 .empty {
   padding: 40px;
   text-align: center;
-  color: #78879b;
+  color: var(--muted);
   background: #fff;
   border-radius: 16px;
 }
@@ -134,12 +138,12 @@ onMounted(load)
 .meta {
   margin-top: 6px;
   font-size: 12px;
-  color: #78879b;
+  color: var(--muted);
 }
 .statement {
   margin: 10px 0;
   font-size: 13px;
-  color: #43536a;
+  color: var(--ink-2);
   line-height: 1.6;
 }
 .actions {

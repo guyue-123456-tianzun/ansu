@@ -6,3 +6,6 @@
 - [screenshots/](screenshots/)：32 张基线截图
 
 当前只完成 R0，未修改前端源码。
+
+- [ui-changes.md](ui-changes.md)：逐轮变更、验证与已知剩余
+- [screenshots-r1/](screenshots-r1/)：R1 后关键页面截图

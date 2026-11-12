@@ -178,12 +178,12 @@ function renderChart() {
     xAxis: {
       type: 'category',
       data: points.map((p) => shortTime(p.ts)),
-      axisLabel: { color: '#78879b', fontSize: 11 },
+      axisLabel: { color: 'var(--muted)', fontSize: 11 },
     },
     yAxis: {
       type: 'value',
       name: 'W',
-      axisLabel: { color: '#78879b' },
+      axisLabel: { color: 'var(--muted)' },
       splitLine: { lineStyle: { color: '#eef3f8' } },
     },
     series: [
@@ -192,7 +192,7 @@ function renderChart() {
         smooth: true,
         symbol: 'none',
         data: points.map((p) => p.p_w),
-        lineStyle: { color: '#0ea5e9', width: 2 },
+        lineStyle: { color: '#0284c7', width: 2 },
         areaStyle: { color: 'rgba(14,165,233,0.15)' },
         markLine: {
           silent: true,
@@ -267,7 +267,7 @@ function resizeChart() {
 .page {
   min-height: 100%;
   padding: 18px 20px 24px;
-  background: #f2f5f9;
+  background: var(--bg);
 }
 .topbar {
   display: flex;
@@ -286,7 +286,7 @@ function resizeChart() {
   border-radius: 12px;
   display: grid;
   place-items: center;
-  background: #0b2545;
+  background: var(--navy);
   color: #fff;
   font-weight: 700;
 }
@@ -295,7 +295,7 @@ function resizeChart() {
   font-size: 18px;
 }
 .muted {
-  color: #78879b;
+  color: var(--muted);
 }
 .small {
   font-size: 12px;
@@ -339,11 +339,11 @@ function resizeChart() {
   border-radius: 10px;
   cursor: pointer;
   text-align: left;
-  color: #142033;
+  color: var(--ink);
 }
 .dorm-row:hover,
 .dorm-row.active {
-  background: #eaf6fd;
+  background: var(--accent-soft);
 }
 .dot {
   width: 8px;
@@ -352,12 +352,12 @@ function resizeChart() {
   background: #22c55e;
   grid-row: 1 / 3;
 }
-.dot.warned { background: #f59e0b; }
+.dot.warned { background: var(--warning-2); }
 .dot.cut_off { background: #ef4444; }
 .dot.locked { background: #94a3b8; }
 .room { font-weight: 700; }
-.power { font-size: 12px; color: #43536a; }
-.state { font-size: 11px; color: #78879b; grid-column: 2 / 4; }
+.power { font-size: 12px; color: var(--ink-2); }
+.state { font-size: 11px; color: var(--muted); grid-column: 2 / 4; }
 .center {
   display: flex;
   flex-direction: column;
@@ -378,12 +378,12 @@ function resizeChart() {
 .metric span {
   display: block;
   font-size: 12px;
-  color: #78879b;
+  color: var(--muted);
   margin-bottom: 4px;
 }
 .metric b { font-size: 22px; }
-.metric.warning b { color: #b45309; }
-.metric.danger b { color: #b91c1c; }
+.metric.warning b { color: var(--warning); }
+.metric.danger b { color: var(--danger); }
 .chart-panel {
   flex: 1;
   min-height: 0;
@@ -417,12 +417,12 @@ function resizeChart() {
 .alert-meta {
   margin-top: 4px;
   font-size: 12px;
-  color: #78879b;
+  color: var(--muted);
 }
-.state-text.resolved { color: #15803d; }
-.state-text.notified { color: #b45309; }
+.state-text.resolved { color: var(--success); }
+.state-text.notified { color: var(--warning); }
 .empty {
-  color: #78879b;
+  color: var(--muted);
   font-size: 13px;
   padding: 20px 0;
 }

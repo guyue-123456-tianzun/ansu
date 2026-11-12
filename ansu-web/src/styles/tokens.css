@@ -1,0 +1,128 @@
+:root {
+  /* spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* typography */
+  --text-xs: 12px;
+  --lh-xs: 18px;
+  --text-sm: 13px;
+  --lh-sm: 20px;
+  --text-base: 14px;
+  --lh-base: 22px;
+  --text-md: 16px;
+  --lh-md: 24px;
+  --text-lg: 20px;
+  --lh-lg: 28px;
+  --text-xl: 24px;
+  --lh-xl: 32px;
+  --text-display: 32px;
+  --lh-display: 40px;
+  --text-hero: 40px;
+  --lh-hero: 48px;
+
+  /* color */
+  --ink: #142033;
+  --ink-2: #43536a;
+  --muted: #5b6b80;
+  --line: #dfe6ef;
+  --bg: #f2f5f9;
+  --surface: #ffffff;
+  --navy: #0b2545;
+  --accent: #1d4ed8;
+  --accent-2: #0284c7;
+  --accent-soft: #eaf6fd;
+  --success: #15803d;
+  --success-soft: #eaf7ee;
+  --warning: #b45309;
+  --warning-2: #f59e0b;
+  --warning-soft: #fff8e8;
+  --danger: #b91c1c;
+  --danger-soft: #fdecec;
+  --info: #475569;
+  --info-soft: #eef2f7;
+
+  /* radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-pill: 999px;
+
+  /* shadow */
+  --shadow-1: 0 1px 2px rgba(11, 37, 69, 0.04);
+  --shadow-2: 0 8px 24px rgba(11, 37, 69, 0.06);
+  --shadow-3: 0 18px 50px rgba(11, 37, 69, 0.12);
+
+  /* layout */
+  --page-gutter: 16px;
+  --page-gutter-lg: 32px;
+  --content-max: none;
+
+  /* Element Plus theme override (scoped by variables only) */
+  --el-color-primary: var(--accent);
+  --el-color-primary-light-3: #4f7cf7;
+  --el-color-primary-light-5: #7c9bfa;
+  --el-color-primary-light-7: #a9bdfc;
+  --el-color-primary-light-8: #c0cffd;
+  --el-color-primary-light-9: #e8efff;
+  --el-color-primary-dark-2: #1e40af;
+  --el-color-success: var(--success);
+  --el-color-warning: var(--warning);
+  --el-color-danger: var(--danger);
+  --el-color-info: var(--info);
+  --el-border-radius-base: var(--radius-md);
+  --el-border-radius-small: var(--radius-sm);
+  --el-font-size-base: var(--text-base);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  font-size: var(--text-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

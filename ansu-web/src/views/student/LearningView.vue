@@ -111,10 +111,19 @@ onMounted(load)
 
 <style scoped>
 .page {
-  max-width: 430px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: none;
+  margin: 0;
   min-height: 100%;
-  padding: 16px 14px 32px;
+  padding: 16px;
+}
+.material p,
+.hero p,
+.hint {
+  max-width: 68ch;
+}
+@media (min-width: 900px) {
+  .page { padding: 24px 32px; }
 }
 .topbar {
   display: flex;
@@ -127,16 +136,16 @@ onMounted(load)
   background: #fff;
   border-radius: 10px;
   padding: 8px 10px;
-  color: #0b2545;
+  color: var(--navy);
 }
 .spacer { flex: 1; }
 .loading {
   padding: 40px 0;
   text-align: center;
-  color: #78879b;
+  color: var(--muted);
 }
 .hero {
-  background: #0b2545;
+  background: var(--navy);
   color: #fff;
   border-radius: 18px;
   padding: 20px;
@@ -176,12 +185,12 @@ h1 {
 .material h3 {
   margin: 0 0 4px;
   font-size: 13px;
-  color: #0ea5e9;
+  color: var(--accent-2);
 }
 .material p {
   margin: 0;
   font-size: 13px;
-  color: #43536a;
+  color: var(--ink-2);
   line-height: 1.7;
 }
 .question {
@@ -198,12 +207,28 @@ h1 {
 .options {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
 }
-.option {
+.options :deep(.el-radio) {
+  display: flex;
+  width: 100%;
+  min-height: 42px;
   margin-right: 0;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+.options :deep(.el-radio__label) {
   font-size: 13px;
   white-space: normal;
+  line-height: 1.5;
+}
+.options :deep(.el-radio.is-checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 .submit {
   width: 100%;
@@ -211,13 +236,13 @@ h1 {
 }
 .result {
   margin-top: 16px;
-  background: #fff8e8;
+  background: var(--warning-soft);
   border: 1px solid #fde3a7;
   border-radius: 16px;
   padding: 16px;
 }
 .result.pass {
-  background: #eaf7ee;
+  background: var(--success-soft);
   border-color: #bfe6cb;
 }
 .result-title {
@@ -227,7 +252,7 @@ h1 {
 .result p {
   margin: 8px 0 0;
   font-size: 13px;
-  color: #43536a;
+  color: var(--ink-2);
   line-height: 1.6;
 }
 .result-actions {

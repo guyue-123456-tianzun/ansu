@@ -198,7 +198,7 @@ public class LearningService {
         }
         int delta = Math.min(3, remaining);
         int before = currentCredit(dormId);
-        int after = Math.min(120, before + delta);
+        int after = Math.min(100, before + delta);
         jdbc.update("""
                 INSERT INTO credit_ledger
                 (dorm_id, delta, reason, ref_type, ref_id, balance_after, idempotency_key)
@@ -275,7 +275,7 @@ public class LearningService {
                         new Question("发现疑似违规电器后，第一步应该怎么做？",
                                 List.of("继续使用", "直接申诉", "拔掉设备并观察功率", "关闭手机"), 2, "撤除设备后观察功率是否回落。"),
                         new Question("首次违规完成安全学习后，通常可以获得什么？",
-                                List.of("免于任何记录", "提前恢复用电", "增加信用分到 120", "自动解除所有告警"), 1, "首次学习通过可提前恢复用电并 +3 信用。")
+                                List.of("免于任何记录", "提前恢复用电", "信用分直接加到 100", "自动解除所有告警"), 1, "首次学习通过可提前恢复用电并 +3 信用。")
                 )));
         courses.put("L-PWR-01", new Course("L-PWR-01", "总功率：错峰使用与回路容量", "overload",
                 List.of(

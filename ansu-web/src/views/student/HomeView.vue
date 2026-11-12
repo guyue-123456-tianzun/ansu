@@ -12,7 +12,7 @@
         <div class="power">{{ overview?.power_w ?? '--' }}<span>W</span></div>
         <div class="hero-meta">
           <span>今日 {{ overview?.today_kwh ?? 0 }} kWh</span>
-          <span>信用分 {{ overview?.dorm?.credit_score ?? 100 }} / 120</span>
+          <span>信用分 {{ overview?.dorm?.credit_score ?? 100 }} / 100</span>
           <span>未读 {{ overview?.unread_notifications ?? 0 }}</span>
         </div>
       </header>
@@ -43,13 +43,13 @@
           <div class="row"><span>当前功率</span><b>{{ overview?.power_w ?? 0 }} W</b></div>
           <div class="row"><span>今日用电</span><b>{{ overview?.today_kwh ?? 0 }} kWh</b></div>
           <div class="row"><span>累计违规</span><b>{{ overview?.dorm?.violation_count ?? 0 }} 次</b></div>
-          <div class="row"><span>宿舍信用</span><b>{{ overview?.dorm?.credit_score ?? 100 }} / 120</b></div>
+          <div class="row"><span>宿舍信用</span><b>{{ overview?.dorm?.credit_score ?? 100 }} / 100</b></div>
         </div>
       </section>
 
       <section class="card">
         <div class="card-title">信用怎么算</div>
-        <p class="hint">基础分 100；安全学习每次 +3（每月最多 +6）；整月无违规 +2；申诉通过撤销本次扣分。上限 120，所以会看到 100 以上。</p>
+        <p class="hint">基础分 100；安全学习每次 +3（每月最多 +6）；整月无违规 +2；申诉通过撤销本次扣分。上限 100；学习/无违规加分到 100 为止。</p>
       </section>
 
       <section class="card">
@@ -127,10 +127,11 @@ onUnmounted(() => {
 
 <style scoped>
 .phone {
-  max-width: 430px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: none;
+  margin: 0;
   min-height: 100%;
-  padding: 16px 14px 32px;
+  padding: 16px;
 }
 .column {
   display: flex;
@@ -142,16 +143,15 @@ onUnmounted(() => {
 }
 @media (min-width: 900px) {
   .phone {
-    max-width: 980px;
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
     gap: 18px;
-    padding: 24px;
+    padding: 24px 32px;
     align-items: start;
   }
 }
 .hero {
-  background: #0b2545;
+  background: var(--navy);
   color: #fff;
   border-radius: 20px;
   padding: 20px;
@@ -204,7 +204,7 @@ onUnmounted(() => {
   margin-top: 14px;
   padding: 16px;
   border-radius: 16px;
-  background: #fff8e8;
+  background: var(--warning-soft);
   border: 1px solid #fde3a7;
   cursor: pointer;
 }
@@ -218,13 +218,13 @@ onUnmounted(() => {
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: #f59e0b;
+  background: var(--warning-2);
   box-shadow: 0 0 0 5px rgba(245, 158, 11, 0.15);
 }
 .state {
   margin-left: auto;
   font-size: 11px;
-  color: #b45309;
+  color: var(--warning);
 }
 .alert-card p {
   margin: 8px 0 0;
@@ -237,7 +237,7 @@ onUnmounted(() => {
   justify-content: space-between;
   margin-top: 10px;
   font-size: 12px;
-  color: #b45309;
+  color: var(--warning);
 }
 .empty-card,
 .card {
@@ -254,7 +254,7 @@ onUnmounted(() => {
 .hint {
   margin: 8px 0 0;
   font-size: 13px;
-  color: #78879b;
+  color: var(--muted);
   line-height: 1.6;
 }
 .card-title {
@@ -271,9 +271,9 @@ onUnmounted(() => {
   display: flex;
   justify-content: space-between;
   font-size: 13px;
-  color: #43536a;
+  color: var(--ink-2);
 }
 .row b {
-  color: #142033;
+  color: var(--ink);
 }
 </style>
