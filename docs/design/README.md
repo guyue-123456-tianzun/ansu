@@ -1,158 +1,91 @@
-# 安宿 · 全量版工程骨架
+# 安宿 · 落地执行包（全量版索引）
 
-> 当前是**第一批工程件**：23 表 DDL、种子、阈值、Java 健康检查/演示鉴权、Python health、Vue 登录壳。
-> 还没做：大屏三区、注入/告警、申诉/学习、RAG 上传/解析/出题。按 `docs` 里的阶段顺序推进。
+> 当前基线：**全量版、质量优先、不设硬截止；恢复 P1/P2；新增“本地上传规定 + RAG 出题”学习模块。**
+> 输入：42 篇拆解笔记 + 原文 `05-A版-安宿-产品设计文档.html`、`06-A版-安宿-项目开发文档.html`。
+> 交付形态：5 份分析与方案 + 1 份 RAG 详细设计。
 
-## 目录
+## 文件导航
+
+| 文件 | 用途 | 什么时候看 |
+|---|---|---|
+| `05-全量版范围与RAG学习方案.md` | **当前总方案**：全量功能、六角色、页面、端点分组、23 表、架构、质量优先路线 | 先看；定范围与阶段 |
+| `06-RAG学习模块详细设计.md` | **RAG 专项**：上传/解析/分块/向量/检索/出题/材料/审核/学生答题/引用/评测/安全/运维 | 做学习模块时逐节看 |
+| `04-原文对账与修订记录.md` | 原文比笔记多出的 12 项、我需修正的 10 处、原文内部 12 处冲突 | 拍板 X01–X12 |
+| `00-文档分析与缺口清单.md` | 原文 + 笔记的通读结论、40 条冲突、18 类缺失、假设与决策 | 决定改哪些文档 |
+| `01-单人26天落地总方案.md` | **Demo-P0 保底档**：范围、25 天排期、门禁、风险、砍线 | 只做演示/保底时看 |
+| `02-补充规格-数据模型与接口契约.md` | **核心 16 表 + 28 业务端点 + 2 基础设施端点**、YAML、判定、状态机 | 写核心业务时查 |
+| `03-任务拆解与验收清单.md` | **Demo-P0 的 WBS 与 98 条验收**；全量版验收见 05/06 | 做保底档时看 |
+
+> `01/02/03` 仍然有效，但它们是“保底档/核心基线”；全量版以 `05/06` 为准。RAG 表与端点在 `06`，核心 16 表在 `02`。
+
+## 一句话结论
+
+原文按 **1.5 人** 设计；当前**按 1 人串行**推进，全量版约 25–30 周。若后续能加人，再按 Java/前端/Python-RAG 并行加速。全量版不是“堆功能”，而是把三件事做深：
+
+1. **治理闭环**：识别 → 提醒 → 解释 → 处置 → 学习 → 复盘。
+2. **完整角色**：学生、宿管、辅导员、维修工、管理员、访客；P1/P2 全部恢复。
+3. **可信学习**：本地上传学校规定 → 解析/分块/检索 → 生成材料与题目 → 人工审核 → 学生答题 → 条款引用。
+
+## 全量版新增/恢复清单
+
+| 类别 | 内容 |
+|---|---|
+| 恢复 P1 | 报修全流程、数据凭证、信用明细、学习统计、工单、辅导员只读 |
+| 恢复 P2 | 节能建议、文明宿舍榜 |
+| 恢复角色 | 辅导员、维修工、访客 |
+| 新增 RAG | 规定知识库、出题工作台、学习材料、引用溯源、学习分析 |
+| 新增表 | `regulation_document`、`regulation_chunk`、`quiz_paper`、`quiz_question`、`ingestion_job`、`rag_query_log`、`auth_refresh_token` |
+| 新增端点 | 知识库 8、出题 6、学习 4、用户/审计 5 等；总量约 70–75 |
+
+## 已拍板的 5 件事
+
+| ID | 决策 | 已选 | 备注 |
+|---|---|---|---|
+| RG01 | RAG 生成 LLM | **GLM-4-Plus（已选，原备选）** | 只发送 top-k 片段，不传整份文档；保留本地 Qwen 开关 |
+| RG02 | 向量库 | **Chroma 嵌入式** | 推荐项；规模上来再换 Qdrant |
+| RG03 | 嵌入/重排 | **BGE-M3 + bge-reranker-v2-m3** | 推荐项；CPU 可用 bge-small 兜底 |
+| RG04 | 题目发布 | **必须人工审核** | 推荐项；不自动发布 AI 题 |
+| RG05 | 多校 | **只预留 `school_id`** | 推荐项；不做完整多租户 |
+
+## RAG 学习一句话流程
 
 ```text
-ansu/
-├─ ansu-server/        Java 21 + Spring Boot 3.3
-├─ ansu-ai/            Python 3.11 + FastAPI（health / RAG health）
-├─ ansu-web/           Vue3 + Vite（登录 / 管理壳 / 学生壳）
-├─ scripts/            smoke / reset
-├─ docs/               运行手册（后续）
-├─ docker-compose.yml  MySQL 8
-└─ .env.example
+管理员上传规定 → 解析/OCR → 按章条分块 → BGE-M3 向量化 → Chroma
+→ 管理员选课程/难度 → 混合检索 + 重排 → LLM 生成 10 选 5 → 自动校验
+→ 人工审核/编辑 → 发布 A/B 卷
+→ 学生读材料 → 答 5 题 → 服务端评分 → 通过恢复 +3 / 不通过看解析与引用 → B 卷重试
 ```
 
-## 前置环境
+**三条硬规则**：
 
-| 组件 | 版本 |
-|---|---|
-| JDK | 17+（推荐 21；本项目 17 可跑） |
-| Maven | 3.9+ |
-| Node | 20 LTS+ |
-| Python | 3.11+ |
-| MySQL | 8.0.16+（或 Docker） |
+1. 每题必须有 `source_chunk_id` + `source_quote`，引用必须能在原文中匹配。
+2. 不自动发布 AI 题目；必须人工审核。
+3. 规定里找不到答案，就说“未找到”，不编造。
 
-## 快速启动（当前默认：本机 MySQL 3306）
+## 建议的推进顺序
 
-`.env` 已指向本机 MySQL `127.0.0.1:3306`，并已执行过 `scripts/init-db.py`；`ansu` 库、`ansu` 账号、23 表、20 寝种子都已就绪。
+1. 先看 `05` 定全量范围；看 `06` 定 RAG 方案；RG01–RG05 已拍板，X01–X12 仍建议逐项确认。
+2. 按 `05` 的 P0–P6 阶段推进；每阶段过出口标准再进下一阶段。
+3. 核心业务仍按 `02` 的 16 表/28+2 端点实现；RAG 按 `06` 的 6 表/端点实现。
+4. 保底演示按 `03` 的 98 条验收；全量验收按 `05` 第 9 节 + `06` 第 17 节。
 
-### 1) 确认 MySQL 服务
+## 工程骨架（第一批）
 
-Windows 服务里确认 `MySQL80` 正在运行，或：
+已在 `../ansu/` 生成可启动骨架：
 
-```bash
-"C:/Program Files/MySQL/MySQL Server 8.0/bin/mysql" -h127.0.0.1 -P3306 -uansu -pansu -e "SELECT 1;"
-```
+- 23 表 Flyway DDL + 种子（20 寝含 314/315、六角色演示身份）
+- `thresholds.yaml`（含 `night_limit_w: 400`）
+- Java：`/api/health`、`/api/auth/demo`、`/api/safety/thresholds`、阈值版本初始化
+- Python：`/ai/health`、`/ai/rag/health`
+- Vue：登录页 + 管理/学生占位页
+- 已验证：SQL 静态检查、YAML 解析、Python health 200/401、前端 `npm run build`、Java 编译/打包/启动（JDK17）、Flyway 23 表、学生/admin 演示 JWT、阈值接口
+- 未验证：GitHub push（当前网络 443/22 被拒）；全量业务闭环（下一批）
 
-### 2) 启动后端（Flyway 已执行，不会重复建表）
+启动说明见 `../ansu/README.md`。
 
-```bash
-cd ansu-server
-mvn spring-boot:run -Dspring-boot.run.profiles=demo
-```
+## 使用提醒
 
-如果 Git Bash 找不到 `mvn`，用 cmd/PowerShell，或用完整路径：
-
-```bash
-"D:/Maven/apache-maven-3.10.0/bin/mvn.cmd" spring-boot:run -Dspring-boot.run.profiles=demo
-```
-
-> 你的全局 Maven `settings.xml` 第 166 行把 `</mirrorOf>` 写成了 `</mirrorof>`，会导致 `mvn` 启动失败；改回大写 `O` 即可，或先用 IntelliJ 自带 Maven。
-
-### 3) 启动 AI sidecar（另开终端）
-
-```bash
-cd ansu-ai
-python -m venv .venv
-source .venv/bin/activate        # Windows Git Bash: source .venv/Scripts/activate
-pip install -r requirements.txt
-uvicorn app.main:app --host 127.0.0.1 --port 8000
-```
-
-### 4) 启动前端（另开终端）
-
-```bash
-cd ansu-web
-npm install
-npm run dev
-```
-
-打开 `http://127.0.0.1:5173/login`，选择角色进入。学生默认 314。
-
-### 可选：改用 Docker MySQL
-
-`docker-compose.yml` 已把宿主机端口设为 `3307`，不会和本机 3306 冲突。用 Docker 时把 `.env` 的 `DB_URL` 改成 `3307`、`DB_PASSWORD` 改成 `ansu` 即可。
-
-## 在 VSCode 打开
-
-1. VSCode → `File → Open Folder` → 选择 `ansu` 整个文件夹（不要只打开单个文件）。
-2. 推荐扩展：
-   - Extension Pack for Java
-   - Vue - Official
-   - Python
-3. 终端在 VSCode 里打开时，默认目录是 `ansu`；按上面的步骤启动即可。
-
-## Git
-
-本地仓库已推送到 `https://github.com/guyue-123456-tianzun/ansu`（`main` 分支）。  
-后续提交：
-
-```bash
-cd ansu
-git add .
-git commit -m "feat: ..."
-git push
-```
-
-如果是 HTTPS，第一次 push 会让你登录/填 token；不要在聊天里发密码或 token。  
-也可以在 VSCode 的“源代码管理”里点 `Publish Branch`，按提示登录。
-
-## 冒烟
-
-```bash
-# 健康
-curl -s http://127.0.0.1:8080/api/health | jq .
-
-# 演示身份（学生 314）
-curl -s -X POST http://127.0.0.1:8080/api/auth/demo \
-  -H 'Content-Type: application/json' \
-  -d '{"role":"student","dormId":314}' | jq .
-
-# 阈值（需带 token）
-TOKEN=$(curl -s -X POST http://127.0.0.1:8080/api/auth/demo \
-  -H 'Content-Type: application/json' -d '{"role":"admin"}' | jq -r '.data.token')
-curl -s http://127.0.0.1:8080/api/safety/thresholds \
-  -H "Authorization: Bearer $TOKEN" | jq '.data.version'
-```
-
-## 已实现
-
-- `V1__schema.sql`：23 表（16 核心 + 6 RAG + 1 刷新令牌）
-- `V2__seed.sql`：1 号楼、20 寝（含 314/315）、六角色演示身份
-- `thresholds.yaml`：版本、时间带、白名单、信用、定时器（含 `night_limit_w: 400`）
-- `POST /api/auth/demo`：按角色/宿舍换 JWT（12h）
-- `GET /api/health`：DB + 阈值版本 + demo 状态
-- `GET /api/safety/thresholds`：返回当前阈值（需登录）
-- Python `GET /ai/health`、`GET /ai/rag/health`
-- Vue 登录页 + 管理/学生占位页
-
-## 下一批
-
-1. 大屏三区 + 20 寝状态 + 曲线
-2. 演示 run / 注入 800W / 告警 / 证据
-3. 学生告警详情 + 三段式
-4. 申诉/复核/恢复
-5. RAG 上传/解析/分块/检索
-
-## 验证状态（第一批）
-
-| 项 | 状态 | 说明 |
-|---|---|---|
-| SQL 23 表 | **通过** | Docker MySQL 8.0 实际执行；Flyway v1/v2 成功 |
-| `thresholds.yaml` | 通过 | PyYAML 解析成功；version=2026.11.1，night_limit=400 |
-| Python health | 通过 | `/ai/health` 200；无令牌 401；`/ai/rag/health` 200 |
-| 前端 | 通过 | `npm run build` 成功 |
-| 鉴权 | 通过 | 学生 314 拿 JWT；admin 拿 JWT；无 token 访问阈值 401 |
-| Java | **编译/打包/运行通过** | JDK17；`target/ansu-server-0.1.0.jar`；`/api/health` 返回 ok |
-| MySQL/Flyway | **通过** | 本机 MySQL 8.0（3306）；Flyway 应用 2 个迁移；20 寝 + 阈值版本已入库 |
-
-## 注意
-
-- 当前 `user_account.password_hash` 为空，只支持演示身份；正式账号在 P1 补。
-- `GET /api/health` 的 `python` 字段暂为 `not_checked`；下一批接入 AI 健康检查。
-- 本机若只有 JDK 17 / 无 Maven / 无 Docker，先安装再启动。
-- 前端构建有 chunk >500kB 警告；下一批按路由/图表库分包。
+- 全量版不设硬截止；不要用“26 天”反推范围。
+- 当前按 1 人排：先核心闭环，再 RAG，再 P1/P2；不要同时开三条战线。若后续加人，再并行。
+- RAG 的难点不是“调通 LLM”，而是**解析质量、分块边界、引用准确性、题目审核**；这四件事决定可信度。
+- 规定文档是校内资料：嵌入/重排本地；GLM-4-Plus 只接收 top-k 片段，不传整份文档；可切本地 Qwen 实现数据不出校。
