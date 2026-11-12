@@ -77,6 +77,22 @@ npm run dev
 
 `docker-compose.yml` 已把宿主机端口设为 `3307`，不会和本机 3306 冲突。用 Docker 时把 `.env` 的 `DB_URL` 改成 `3307`、`DB_PASSWORD` 改成 `ansu` 即可。
 
+## 一键启动脚本
+
+在 `ansu` 目录下：
+
+```powershell
+.un-server.ps1   # 后端 8080
+.un-ai.ps1       # Python 8000
+.un-web.ps1      # 前端 5173
+```
+
+如果 PowerShell 提示禁止运行脚本，先执行：
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+```
+
 ## 在 VSCode 打开
 
 1. VSCode → `File → Open Folder` → 选择 `ansu` 整个文件夹（不要只打开单个文件）。
