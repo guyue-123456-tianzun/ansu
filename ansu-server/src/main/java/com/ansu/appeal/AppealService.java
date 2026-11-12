@@ -14,14 +14,17 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.ansu.auth.UserPrincipal;
 import com.ansu.common.TimeUtil;
+import com.ansu.dashboard.QueryService;
 
 @Service
 public class AppealService {
 
     private final JdbcTemplate jdbc;
+    private final QueryService queryService;
 
-    public AppealService(JdbcTemplate jdbc) {
+    public AppealService(JdbcTemplate jdbc, QueryService queryService) {
         this.jdbc = jdbc;
+        this.queryService = queryService;
     }
 
     public record SubmitRequest(Long alertId, String reasonType, String statement) {
@@ -144,8 +147,10 @@ public class AppealService {
         }
 
         List<Map<String, Object>> appeals = jdbc.queryForList("""
-                SELECT p.*, d.credit_score, d.status AS dorm_status
-                FROM appeal p JOIN dorm d ON d.id = p.dorm_id
+                SELECT p.*, d.credit_score, d.status AS dorm_status, a.demo_run_id
+                FROM appeal p
+                JOIN dorm d ON d.id = p.dorm_id
+                JOIN alert_log a ON a.id = p.alert_id
                 WHERE p.id = ?
                 """, appealId);
         if (appeals.isEmpty()) {
@@ -162,6 +167,7 @@ public class AppealService {
         long studentId = ((Number) appeal.get("submitted_by")).longValue();
         int originalPenalty = ((Number) appeal.get("original_penalty")).intValue();
         int credit = ((Number) appeal.get("credit_score")).intValue();
+        String runId = appeal.get("demo_run_id") == null ? null : String.valueOf(appeal.get("demo_run_id"));
         LocalDateTime now = LocalDateTime.now(TimeUtil.ZONE);
 
         jdbc.update("""
@@ -170,6 +176,7 @@ public class AppealService {
                 """, decision, reviewer.id(), request.note(), now, appealId);
 
         if ("approved".equals(decision)) {
+            queryService.forceLowPower(dormId, now, runId);
             int after = Math.max(0, Math.min(120, credit + originalPenalty));
             jdbc.update("""
                     UPDATE dorm SET status = 'normal', active_alert_id = NULL,

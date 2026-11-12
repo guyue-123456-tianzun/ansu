@@ -149,7 +149,7 @@ public class DemoService {
         }
         LocalDateTime now = LocalDateTime.now(TimeUtil.ZONE);
         jdbc.update("UPDATE demo_run SET status = 'archived', ended_at = ? WHERE status = 'active'", now);
-        jdbc.update("DELETE FROM notification WHERE ref_type = 'alert'");
+        jdbc.update("DELETE FROM notification");
         jdbc.update("""
                 DELETE p FROM appeal p JOIN alert_log a ON a.id = p.alert_id
                 WHERE a.demo_run_id IS NOT NULL

@@ -15,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.ansu.auth.UserPrincipal;
 import com.ansu.common.TimeUtil;
+import com.ansu.dashboard.QueryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
@@ -22,11 +23,13 @@ public class LearningService {
 
     private final JdbcTemplate jdbc;
     private final ObjectMapper json;
+    private final QueryService queryService;
     private final Map<String, Course> courses = new LinkedHashMap<>();
 
-    public LearningService(JdbcTemplate jdbc, ObjectMapper json) {
+    public LearningService(JdbcTemplate jdbc, ObjectMapper json, QueryService queryService) {
         this.jdbc = jdbc;
         this.json = json;
+        this.queryService = queryService;
         initCourses();
     }
 
@@ -91,6 +94,7 @@ public class LearningService {
         }
 
         long dormId = ((Number) alert.get("dorm_id")).longValue();
+        String runId = alert.get("demo_run_id") == null ? null : String.valueOf(alert.get("demo_run_id"));
         int violationCount = ((Number) alert.get("violation_count")).intValue();
         if (violationCount >= 3) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "第 3 次违规学习不能解锁");
@@ -137,6 +141,7 @@ public class LearningService {
 
         if (passed) {
             if (violationCount <= 1) {
+                queryService.forceLowPower(dormId, now, runId);
                 jdbc.update("UPDATE dorm SET status = 'normal', active_alert_id = NULL, updated_at = ? WHERE id = ?",
                         now, dormId);
                 jdbc.update("UPDATE alert_log SET status = 'resolved', resolved_at = COALESCE(resolved_at, ?) WHERE id = ?",
@@ -182,16 +187,26 @@ public class LearningService {
         if (!existing.isEmpty()) {
             return 0;
         }
+        LocalDateTime monthStart = now.withDayOfMonth(1).toLocalDate().atStartOfDay();
+        Integer awarded = jdbc.queryForObject("""
+                SELECT COALESCE(SUM(delta), 0) FROM credit_ledger
+                WHERE dorm_id = ? AND reason = 'learning' AND created_at >= ?
+                """, Integer.class, dormId, monthStart);
+        int remaining = Math.max(0, 6 - (awarded == null ? 0 : awarded));
+        if (remaining <= 0) {
+            return 0;
+        }
+        int delta = Math.min(3, remaining);
         int before = currentCredit(dormId);
-        int after = Math.min(120, before + 3);
+        int after = Math.min(120, before + delta);
         jdbc.update("""
                 INSERT INTO credit_ledger
                 (dorm_id, delta, reason, ref_type, ref_id, balance_after, idempotency_key)
-                VALUES (?, 3, 'learning', 'learning', ?, ?, ?)
-                """, dormId, recordId, after, idem);
+                VALUES (?, ?, 'learning', 'learning', ?, ?, ?)
+                """, dormId, delta, recordId, after, idem);
         jdbc.update("UPDATE dorm SET credit_score = ?, updated_at = ? WHERE id = ?", after, now, dormId);
-        jdbc.update("UPDATE learning_record SET credit_awarded = 3 WHERE id = ?", recordId);
-        return 3;
+        jdbc.update("UPDATE learning_record SET credit_awarded = ? WHERE id = ?", delta, recordId);
+        return delta;
     }
 
     private Map<String, Object> result(int score, boolean passed, int attempt, int creditDelta,
@@ -211,7 +226,7 @@ public class LearningService {
 
     private Map<String, Object> alert(UserPrincipal student, long alertId) {
         List<Map<String, Object>> alerts = jdbc.queryForList("""
-                SELECT a.id, a.dorm_id, a.alert_type, d.violation_count
+                SELECT a.id, a.dorm_id, a.alert_type, a.demo_run_id, d.violation_count
                 FROM alert_log a JOIN dorm d ON d.id = a.dorm_id
                 WHERE a.id = ? AND a.dorm_id = ?
                 """, alertId, student.dormId());

@@ -68,6 +68,7 @@ public class StudentController {
         }
 
         if ("warned".equals(status)) {
+            queryService.forceLowPower(dormId, now, runId);
             queryService.updateDormNormal(dormId, now);
             queryService.resolveAlert(id, now);
             queryService.logAction(id, "student_removed", now, "remove:" + id);
