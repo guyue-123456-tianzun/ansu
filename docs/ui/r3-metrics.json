@@ -1,0 +1,129 @@
+{
+  "generatedAt": "2026-11-12T08:12:36.583Z",
+  "pages": {
+    "login/375-normal": {
+      "overflow": false,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "lowContrast": [],
+      "tinyButtons": []
+    },
+    "admin-dashboard/375-cut_off": {
+      "overflow": false,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "lowContrast": [],
+      "tinyButtons": []
+    },
+    "student-home/375-cut_off": {
+      "overflow": false,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "lowContrast": [],
+      "tinyButtons": []
+    },
+    "alert-detail/375-cut_off": {
+      "overflow": false,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "lowContrast": [
+        {
+          "text": "提醒",
+          "ratio": 1,
+          "size": 11
+        }
+      ],
+      "tinyButtons": []
+    },
+    "learning/375-task": {
+      "overflow": false,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "lowContrast": [],
+      "tinyButtons": []
+    },
+    "appeals/375-pending": {
+      "overflow": false,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "lowContrast": [],
+      "tinyButtons": []
+    },
+    "login/1440-normal": {
+      "overflow": false,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "lowContrast": [],
+      "tinyButtons": []
+    },
+    "admin-dashboard/1440-cut_off": {
+      "overflow": false,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "lowContrast": [],
+      "tinyButtons": []
+    },
+    "student-home/1440-cut_off": {
+      "overflow": false,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "lowContrast": [],
+      "tinyButtons": []
+    },
+    "alert-detail/1440-cut_off": {
+      "overflow": false,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "lowContrast": [
+        {
+          "text": "提醒",
+          "ratio": 1,
+          "size": 11
+        }
+      ],
+      "tinyButtons": []
+    },
+    "learning/1440-task": {
+      "overflow": false,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "lowContrast": [],
+      "tinyButtons": []
+    },
+    "appeals/1440-pending": {
+      "overflow": false,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "lowContrast": [],
+      "tinyButtons": []
+    },
+    "student-home/375-error": {
+      "overflow": false,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "lowContrast": [],
+      "tinyButtons": []
+    },
+    "alert-detail/375-error": {
+      "overflow": false,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "lowContrast": [],
+      "tinyButtons": []
+    },
+    "learning/375-error": {
+      "overflow": false,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "lowContrast": [],
+      "tinyButtons": []
+    },
+    "appeals/375-error": {
+      "overflow": false,
+      "scrollWidth": 375,
+      "clientWidth": 375,
+      "lowContrast": [],
+      "tinyButtons": []
+    }
+  }
+}

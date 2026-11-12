@@ -6,7 +6,11 @@
       <span class="spacer" />
     </header>
 
-    <div v-if="!task" class="loading">加载中…</div>
+    <div v-if="error" class="state-banner error" role="alert">
+      <span>学习任务加载失败：{{ error }}</span>
+      <el-button size="small" @click="load">重试</el-button>
+    </div>
+    <div v-else-if="!task" class="loading">加载中…</div>
 
     <template v-else>
       <section class="hero">
@@ -59,6 +63,7 @@ import http from '../../api/http'
 const route = useRoute()
 const router = useRouter()
 const task = ref<any>(null)
+const error = ref('')
 const answers = ref<number[]>([-1, -1, -1, -1, -1])
 const submitting = ref(false)
 const result = ref<any>(null)
@@ -71,8 +76,9 @@ async function load() {
       params: { alert_id: route.params.id },
     })
     task.value = res.data
-  } catch (error: any) {
-    ElMessage.error(error?.response?.data?.message || '学习任务加载失败')
+    error.value = ''
+  } catch (e: any) {
+    error.value = e?.response?.data?.message || '网络异常，请检查后端是否启动'
   }
 }
 
@@ -144,6 +150,22 @@ onMounted(load)
   text-align: center;
   color: var(--muted);
 }
+.state-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
+.state-banner.error {
+  background: var(--danger-soft);
+  color: #8f1111;
+  border: 1px solid #f5c2c2;
+}
+.state-banner :deep(.el-button) { min-height: 40px; }
 .hero {
   background: var(--navy);
   color: #fff;
@@ -185,7 +207,7 @@ h1 {
 .material h3 {
   margin: 0 0 4px;
   font-size: 13px;
-  color: var(--accent-2);
+  color: var(--accent-strong);
 }
 .material p {
   margin: 0;
@@ -232,6 +254,7 @@ h1 {
 }
 .submit {
   width: 100%;
+  min-height: 44px;
   margin-top: 16px;
 }
 .result {

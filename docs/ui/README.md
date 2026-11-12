@@ -11,3 +11,5 @@
 - [screenshots-r1/](screenshots-r1/)：R1 后关键页面截图
 - [r2-metrics.json](r2-metrics.json)：R2 响应式指标
 - [screenshots-r2/](screenshots-r2/)：R2 后管理大屏截图（含 1920、错误/加载）
+- [r3-metrics.json](r3-metrics.json)：R3 对比度/触控/溢出指标
+- [screenshots-r3/](screenshots-r3/)：R3 后关键页面与错误态截图

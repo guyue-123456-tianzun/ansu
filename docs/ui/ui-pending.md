@@ -12,7 +12,7 @@
 
 | ID | 类型 | 内容 | 临时方案 | 需要确认 | 状态 |
 |---|---|---|---|---|---|
-| UI-CONFLICT-003 | 数据 vs 展示 | API 返回 `resistive/submitted/misjudge` 等英文枚举 | 前端统一字典中文展示，不改 API | 字典文案由产品确认 | pending |
+| UI-CONFLICT-003 | 数据 vs 展示 | API 返回 `resistive/submitted/misjudge` 等英文枚举 | **已完成：`src/utils/labels.ts` 统一中文展示，不改 API** | 已完成 | done |
 | UI-CONFLICT-005 | 文案 | 登录页内部工程术语 | **已确认并修改：改用 B 文案** | 已完成 | done |
 | UI-VERIFY-001 | 基线缺口 | 原始文档要求大屏 1920×1080/3m 可读 | **已补：`screenshots/**/1920/` 与 `baseline-metrics.json`** | 已完成 | done |
 

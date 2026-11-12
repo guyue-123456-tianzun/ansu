@@ -38,7 +38,7 @@
           <span class="dot" :class="d.status" />
           <span class="room">{{ d.room_no }}</span>
           <span class="power">{{ d.power_w }}W</span>
-          <span class="state">{{ statusText(d.status) }}</span>
+          <span class="state">{{ dormStatusText(d.status) }}</span>
         </button>
       </aside>
 
@@ -67,7 +67,7 @@
               <div class="panel-title">{{ selectedDorm }} 宿舍 · 最近 60 分钟</div>
               <div class="muted small">当前功率 {{ selectedDormData?.power_w ?? 0 }}W · 信用分 {{ selectedDormData?.credit_score ?? 100 }}</div>
             </div>
-            <el-tag :type="tagType(selectedDormData?.status)">{{ statusText(selectedDormData?.status) }}</el-tag>
+            <el-tag :type="tagType(selectedDormData?.status)">{{ dormStatusText(selectedDormData?.status) }}</el-tag>
           </div>
           <div ref="chartRef" class="chart" />
         </div>
@@ -81,9 +81,9 @@
         <div v-if="alerts.length === 0" class="empty">暂无告警</div>
         <div v-for="a in alerts" :key="a.id" class="alert-item">
           <div class="alert-top">
-            <el-tag :type="a.level === 'urgent' ? 'danger' : 'warning'" size="small">{{ levelText(a.level) }}</el-tag>
+            <el-tag :type="a.level === 'urgent' ? 'danger' : 'warning'" size="small">{{ alertLevelText(a.level) }}</el-tag>
             <strong>{{ a.room_no }}</strong>
-            <span class="muted">{{ typeText(a.type) }}</span>
+            <span class="muted">{{ alertTypeText(a.type) }}</span>
           </div>
           <div class="alert-meta">
             {{ a.trigger_value }}W · 阈值 {{ a.threshold }}W
@@ -105,6 +105,7 @@ import { ElMessage } from 'element-plus'
 import * as echarts from 'echarts'
 import http from '../../api/http'
 import { useAuthStore } from '../../stores/auth'
+import { alertLevelText, alertStatusText, alertTypeText, dormStatusText } from '../../utils/labels'
 
 const router = useRouter()
 const auth = useAuthStore()
@@ -122,36 +123,6 @@ let chart: echarts.ECharts | null = null
 let timer: number | undefined
 
 const selectedDormData = computed(() => dorms.value.find((d) => d.id === selectedDorm.value))
-
-const statusMap: Record<string, string> = {
-  normal: '正常',
-  warned: '提醒',
-  cut_off: '分闸',
-  locked: '锁定',
-}
-
-function statusText(status?: string) {
-  return statusMap[status || ''] || '未知'
-}
-
-function levelText(level?: string) {
-  return level === 'urgent' ? '紧急' : level === 'warn' ? '提醒' : '提示'
-}
-
-function alertStatusText(status?: string) {
-  const map: Record<string, string> = {
-    open: '待通知', notified: '待处理', student_responded: '已响应',
-    reviewing: '复核中', resolved: '已处理', closed: '已关闭',
-  }
-  return map[status || ''] || status || ''
-}
-
-function typeText(type?: string) {
-  const map: Record<string, string> = {
-    resistive: '阻性', overload: '总功率', leakage: '漏电', temp: '温度', night_anomaly: '夜间异常',
-  }
-  return map[type || ''] || type || ''
-}
 
 function tagType(status?: string): 'success' | 'warning' | 'danger' | 'info' {
   if (status === 'cut_off') return 'danger'
@@ -412,7 +383,7 @@ function resizeChart() {
 .dot.locked { background: #94a3b8; }
 .room { font-weight: 700; }
 .power { font-size: 12px; color: var(--ink-2); }
-.state { font-size: 11px; color: var(--muted); grid-column: 2 / 4; }
+.state { font-size: 12px; color: var(--muted); grid-column: 2 / 4; }
 .center {
   display: flex;
   flex-direction: column;
@@ -500,7 +471,7 @@ function resizeChart() {
 @media (max-width: 599px) {
   .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .metric:last-child { grid-column: span 2; }
-  .actions :deep(.el-button) { min-height: 36px; }
+  .actions :deep(.el-button) { min-height: 40px; }
 }
 .alert-item {
   padding: 10px 0;

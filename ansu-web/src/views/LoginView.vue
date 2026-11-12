@@ -79,7 +79,7 @@ async function submit() {
 .login-card {
   width: min(420px, 100%);
   padding: 32px;
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   background: #fff;
   box-shadow: 0 18px 50px rgba(11, 37, 69, 0.12);
 }
@@ -108,6 +108,13 @@ h1 {
   margin: 4px 0 0;
   color: var(--muted);
   font-size: 13px;
+}
+.login-card :deep(.el-input__wrapper),
+.login-card :deep(.el-select__wrapper) {
+  min-height: 40px;
+}
+.login-card :deep(.el-button) {
+  min-height: 40px;
 }
 .hint {
   margin: 18px 0 0;

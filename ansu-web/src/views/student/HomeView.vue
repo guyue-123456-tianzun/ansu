@@ -5,7 +5,7 @@
         <div class="hero-top">
           <div>
             <div class="room">{{ overview?.dorm?.room_no ? overview.dorm.room_no + ' 宿舍' : '学生端' }}</div>
-            <div class="status">{{ statusText(overview?.dorm?.status) }}</div>
+            <div class="status">{{ dormStatusLongText(overview?.dorm?.status) }}</div>
           </div>
           <button class="logout" @click="logout">退出</button>
         </div>
@@ -17,7 +17,13 @@
         </div>
       </header>
 
-      <section v-if="overview?.active_alert" class="alert-card" @click="openAlert">
+      <div v-if="error" class="state-banner error" role="alert">
+        <span>数据加载失败：{{ error }}</span>
+        <button class="retry" @click="refresh">重试</button>
+      </div>
+      <div v-else-if="loading && !overview" class="state-banner loading" aria-live="polite">正在加载宿舍状态…</div>
+
+      <section v-if="overview?.active_alert" class="alert-card" role="button" tabindex="0" :aria-label="`查看 ${overview.active_alert.title} 证据`" @click="openAlert" @keydown.enter="openAlert" @keydown.space.prevent="openAlert">
         <div class="alert-head">
           <span class="pulse" />
           <strong>{{ overview.active_alert.title }}</strong>
@@ -65,30 +71,14 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import http from '../../api/http'
 import { useAuthStore } from '../../stores/auth'
+import { alertStatusText, dormStatusLongText } from '../../utils/labels'
 
 const router = useRouter()
 const auth = useAuthStore()
 const overview = ref<any>(null)
+const loading = ref(true)
+const error = ref('')
 let timer: number | undefined
-
-const statusMap: Record<string, string> = {
-  normal: '用电正常',
-  warned: '提醒中',
-  cut_off: '已模拟分闸',
-  locked: '已锁定',
-}
-
-function statusText(status?: string) {
-  return statusMap[status || ''] || '加载中'
-}
-
-function alertStatusText(status?: string) {
-  const map: Record<string, string> = {
-    open: '待通知', notified: '待处理', student_responded: '已响应',
-    reviewing: '复核中', resolved: '已处理', closed: '已关闭',
-  }
-  return map[status || ''] || status || ''
-}
 
 function shortTime(value?: string) {
   if (!value) return ''
@@ -97,11 +87,16 @@ function shortTime(value?: string) {
 }
 
 async function refresh() {
+  if (!overview.value) loading.value = true
   try {
     const res: any = await http.get('/student/overview')
     overview.value = res.data
-  } catch (error) {
-    console.error(error)
+    error.value = ''
+  } catch (e: any) {
+    error.value = e?.response?.data?.message || '网络异常，请检查后端是否启动'
+    console.error(e)
+  } finally {
+    loading.value = false
   }
 }
 
@@ -126,6 +121,33 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.state-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
+.state-banner.error {
+  background: var(--danger-soft);
+  color: #8f1111;
+  border: 1px solid #f5c2c2;
+}
+.state-banner.loading {
+  background: var(--accent-soft);
+  color: var(--ink-2);
+}
+.retry {
+  border: 0;
+  background: var(--surface);
+  color: var(--danger);
+  border-radius: var(--radius-sm);
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: var(--text-sm);
+}
 .phone {
   width: 100%;
   max-width: none;
@@ -177,11 +199,12 @@ onUnmounted(() => {
 }
 .logout {
   border: 0;
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.24);
   color: #fff;
-  border-radius: 10px;
-  padding: 7px 12px;
-  font-size: 12px;
+  border-radius: var(--radius-md);
+  min-height: 40px;
+  padding: 8px 14px;
+  font-size: var(--text-sm);
 }
 .power {
   margin-top: 16px;
@@ -202,6 +225,8 @@ onUnmounted(() => {
 }
 .alert-card {
   margin-top: 14px;
+  width: 100%;
+  text-align: left;
   padding: 16px;
   border-radius: 16px;
   background: var(--warning-soft);

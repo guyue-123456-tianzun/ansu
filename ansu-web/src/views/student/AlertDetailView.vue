@@ -6,12 +6,16 @@
       <span class="spacer" />
     </header>
 
-    <div v-if="!detail" class="loading">加载中…</div>
+    <div v-if="error" class="state-banner error" role="alert">
+      <span>证据加载失败：{{ error }}</span>
+      <el-button size="small" @click="load">重试</el-button>
+    </div>
+    <div v-else-if="!detail" class="loading">加载中…</div>
 
     <template v-else>
       <section class="status-card" :class="detail.alert.status">
         <div class="status-row">
-          <span class="tag">{{ levelText(detail.alert.level) }}</span>
+          <span class="tag">{{ alertLevelText(detail.alert.level) }}</span>
           <span class="room">{{ detail.alert.room_no }} 宿舍</span>
           <span class="state">{{ alertStatusText(detail.alert.status) }}</span>
         </div>
@@ -88,10 +92,12 @@ import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import * as echarts from 'echarts'
 import http from '../../api/http'
+import { alertLevelText, alertStatusText } from '../../utils/labels'
 
 const route = useRoute()
 const router = useRouter()
 const detail = ref<any>(null)
+const error = ref('')
 const removing = ref(false)
 const appealing = ref(false)
 const appealVisible = ref(false)
@@ -99,18 +105,6 @@ const appealReason = ref('misjudge')
 const appealText = ref('')
 const chartRef = ref<HTMLDivElement | null>(null)
 let chart: echarts.ECharts | null = null
-
-function levelText(level?: string) {
-  return level === 'urgent' ? '紧急' : level === 'warn' ? '提醒' : '提示'
-}
-
-function alertStatusText(status?: string) {
-  const map: Record<string, string> = {
-    open: '待通知', notified: '待处理', student_responded: '已响应',
-    reviewing: '复核中', resolved: '已处理', closed: '已关闭',
-  }
-  return map[status || ''] || status || ''
-}
 
 function shortTime(value?: string) {
   if (!value) return ''
@@ -122,10 +116,12 @@ async function load() {
   try {
     const res: any = await http.get(`/student/alerts/${route.params.id}`)
     detail.value = res.data
+    error.value = ''
     await nextTick()
     renderChart()
-  } catch (error) {
-    console.error(error)
+  } catch (e: any) {
+    error.value = e?.response?.data?.message || '网络异常，请检查后端是否启动'
+    console.error(e)
   }
 }
 
@@ -134,7 +130,7 @@ function renderChart() {
   if (!chart) chart = echarts.init(chartRef.value)
   const points = detail.value?.evidence?.points || []
   chart.setOption({
-    grid: { left: 40, right: 16, top: 16, bottom: 28 },
+    grid: { left: 40, right: 64, top: 16, bottom: 28 },
     tooltip: { trigger: 'axis' },
     xAxis: {
       type: 'category',
@@ -159,7 +155,7 @@ function renderChart() {
         markLine: {
           silent: true,
           symbol: 'none',
-          data: [{ yAxis: detail.value?.alert?.threshold || 500, lineStyle: { color: '#f59e0b' } }],
+          data: [{ yAxis: detail.value?.alert?.threshold || 500, label: { formatter: (detail.value?.alert?.threshold || 500) + 'W', color: '#b45309', position: 'insideEndTop' }, lineStyle: { color: '#f59e0b' } }],
         },
       },
     ],
@@ -243,6 +239,22 @@ onUnmounted(() => chart?.dispose())
   text-align: center;
   color: var(--muted);
 }
+.state-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
+.state-banner.error {
+  background: var(--danger-soft);
+  color: #8f1111;
+  border: 1px solid #f5c2c2;
+}
+.state-banner :deep(.el-button) { min-height: 40px; }
 .status-card {
   background: var(--navy);
   color: #fff;
@@ -296,7 +308,7 @@ onUnmounted(() => chart?.dispose())
 }
 .evidence-line {
   margin-top: 8px;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--muted);
   line-height: 1.5;
 }
@@ -307,7 +319,7 @@ onUnmounted(() => chart?.dispose())
 }
 .label {
   font-size: 11px;
-  color: var(--accent-2);
+  color: var(--accent-strong);
   font-weight: 700;
 }
 .explain p {
@@ -337,7 +349,11 @@ onUnmounted(() => chart?.dispose())
 }
 .actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-top: 16px;
+}
+.actions :deep(.el-button) {
+  min-height: 40px;
 }
 </style>
